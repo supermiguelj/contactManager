@@ -1,0 +1,27 @@
+<html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login</title>
+
+        <script type="text/javascript" src="./js/md5.js"></script>
+        <script type="text/javascript" src="./js/code.js"></script>
+        <!-- <link href="css/styles.css" rel="stylesheet"> -->	
+        <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    </head>
+    <body>
+
+    <h1 id="title">Login</h1>
+
+    <div id="loginDiv">
+        <span id="inner-title">PLEASE LOG IN</span>
+        <input type="text" id="loginUsername" placeholder="Please enter username" /><br />
+        <input type="password" id="loginPassword" placeholder="Please enter password"/><br />
+        <button type="button" id="loginButton" class="buttons" onclick="doLogin();"> Login </button>
+        <span id="loginResult"></span>
+    </div>
+    <button type="button" id="signUpButton" class="buttons" onclick="window.location.href = 'signup.html'"> Don't have an account? </button>
+
+    </body>
+</html>

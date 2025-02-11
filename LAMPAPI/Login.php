@@ -7,29 +7,44 @@
 	$firstName = "";
 	$lastName = "";
 
-	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331"); 	
-	if( $conn->connect_error )
+	$database = new mysqli("localhost", "Test", "Dummy", "Manager");
+	if( $database->connect_error )
 	{
-		returnWithError( $conn->connect_error );
+		returnWithError( $database->connect_error );
 	}
 	else
 	{
-		$stmt = $conn->prepare("SELECT ID,firstName,lastName FROM Users WHERE Login=? AND Password =?");
-		$stmt->bind_param("ss", $inData["login"], $inData["password"]);
-		$stmt->execute();
-		$result = $stmt->get_result();
+		$prepStmt = $database->prepare("SELECT ID, firstName, lastName, password FROM Users WHERE username LIKE ?");
+		$prepStmt->bind_param("s", $inData["username"]);
+		$prepStmt->execute();
+		$result = $prepStmt->get_result();
 
 		if( $row = $result->fetch_assoc()  )
 		{
-			returnWithInfo( $row['firstName'], $row['lastName'], $row['ID'] );
+			$storedHash = $row["password"]; // Retrieve hashed password from DB
+
+			// Use password_verify() to check the entered password against the stored hash
+			if (password_verify($inData["password"], $storedHash)) {
+
+				// If password is correct, return user details
+				returnWithInfo(
+					$row["firstName"],
+					$row["lastName"],
+					$row["ID"]
+				);
+			} 
+			else 
+			{
+				returnWithError("Invalid username or password.");
+			}
 		}
 		else
 		{
-			returnWithError("No Records Found");
+			returnWithError("Invalid username or password.");
 		}
 
-		$stmt->close();
-		$conn->close();
+		$prepStmt->close();
+		$database->close();
 	}
 	
 	function getRequestInfo()
@@ -45,13 +60,25 @@
 	
 	function returnWithError( $err )
 	{
-		$retValue = '{"id":0,"firstName":"","lastName":"","error":"' . $err . '"}';
+		$retValue = '{
+			"id": 0, 
+			"firstName": "", 
+			"lastName": "", 
+			"err":"' . $err . '"
+		}';
+		
 		sendResultInfoAsJson( $retValue );
 	}
 	
 	function returnWithInfo( $firstName, $lastName, $id )
 	{
-		$retValue = '{"id":' . $id . ',"firstName":"' . $firstName . '","lastName":"' . $lastName . '","error":""}';
+		$retValue = '{ 
+			"id":' . $id . ', 
+			"firstName":"' . $firstName . '", 
+			"lastName":"' . $lastName . '", 
+			"err":"" 
+		}';
+
 		sendResultInfoAsJson( $retValue );
 	}
 	
