@@ -1,4 +1,4 @@
-const urlBase = 'http://conman.spicyramen.xyz/LAMPAPI';
+const urlBase = 'http://manager.spicyramen.xyz/LAMPAPI';
 const extension = 'php';
 
 let userId = 0;
