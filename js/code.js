@@ -322,7 +322,7 @@ function displayContacts()
 					`;
 				}
 				
-				document.getElementById("contactList").innerHTML = contactList;
+				document.getElementById("contactList").innerHTML = listOfContacts;
 			}
 		};
 		xhr.send();
