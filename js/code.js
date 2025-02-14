@@ -243,11 +243,18 @@ function addContact()
 	
 	document.getElementById("contactAddResult").innerHTML = "";
 
+	// Generates userID
+	let tempUserID = Math.floor(Math.random() * 90000) + 1000;
+
+	// Used to check if generated userID has been taken by previous contact or not
+	// I'll handle this tomorrow ~ Miguel
+
+	// Injects payload
 	let jsonPayload = JSON.stringify({
 		name: contactName,
         email: contactEmail,
 		phone: contactPhone,
-        userID: Math.floor(Math.random() * 90000) + 10000,
+        userID: tempUserID,
 	});
 
 	let url = urlBase + '/CreateContact.' + extension;
