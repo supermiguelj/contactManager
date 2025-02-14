@@ -37,7 +37,7 @@
 
 		sendResultInfoAsJson('{
 			"id": 1, 
-			"msg":"Registration created successfully"
+			"msg": "Registration created successfully"
 		}');
 
 		$prepstmt->close();

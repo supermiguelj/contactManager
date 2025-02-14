@@ -53,6 +53,7 @@
 	function returnWithError( $err )
 	{
 		$retValue = '{
+			"searches": 0,
 			"err":"' . $err . '"
 		}';
 		sendResultInfoAsJson( $retValue );
@@ -62,9 +63,9 @@
 	{
 		$retValue = [
 			"results" => $searchResults,
-			"searches" => $rowCount,
-			"err" => ""
+			"searches" => $rowCount
 		];
+
 		sendResultInfoAsJson( $retValue );
 	}
 	

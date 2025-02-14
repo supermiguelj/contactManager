@@ -36,6 +36,7 @@
 		$retValue = $retValue = '{
 			"msg":"' . $msg . '"
 		}';
+		
 		sendResultInfoAsJson( $retValue );
 	}
 	

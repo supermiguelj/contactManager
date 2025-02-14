@@ -14,7 +14,6 @@
 		$prepstmt->bind_param("sssi", $inData["name"], $inData["email"], $inData["phone"], $inData["userID"]);
 		$prepstmt->execute();
 		
-		returnWithError("");
 		$prepstmt->close();
 		$database->close();
 	}
@@ -28,12 +27,6 @@
 	{
 		header('Content-type: application/json');
 		echo $obj;
-	}
-	
-	function returnWithError( $err )
-	{
-		$retValue = '{"err":"' . $err . '"}';
-		sendResultInfoAsJson( $retValue );
 	}
 	
 ?>

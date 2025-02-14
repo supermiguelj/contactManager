@@ -2,10 +2,6 @@
 <?php
 
 	$inData = getRequestInfo();
-	
-	$id = 0;
-	$firstName = "";
-	$lastName = "";
 
 	$database = new mysqli("localhost", "Test", "Dummy", "Manager");
 	if( $database->connect_error )
