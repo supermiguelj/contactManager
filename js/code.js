@@ -16,8 +16,11 @@ function doLogin()
 	let login = document.getElementById("loginUsername").value;
 	let password = document.getElementById("loginPassword").value;
 
-	// Clear password field
-	document.getElementById("loginPassword").value = "";
+	if (login.length === 0 || password.length === 0)
+	{
+		document.getElementById("loginResult").innerHTML = "No empty field(s) please";
+		return;
+	}
 	
 	// Clear any previous login result messages
 	document.getElementById("loginResult").innerHTML = "";
@@ -47,9 +50,12 @@ function doLogin()
 				// Parse the JSON response from the server
 				let jsonObject = JSON.parse(xhr.responseText);
 				userId = jsonObject.id; // Extract the user ID from the response
+
+				// Clear password field
+				document.getElementById("loginPassword").value = "";
 		
 				// If user ID is invalid (login failed), display an error message
-				if (userId < 1)
+				if (userId == 0)
 				{		
 					document.getElementById("loginResult").innerHTML = "User/Password combination incorrect";
 					return;
@@ -87,8 +93,12 @@ function doSignUp()
 	
 	document.getElementById("registerResult").innerHTML = "";
 
-	// Ensure password is not empty
-    if (password.length < 6) {
+	if (firstName.length === 0 || lastName.length === 0 || username.length === 0 || password.length === 0)
+	{
+		document.getElementById("registerResult").innerHTML = "No empty field(s) please";
+        return;
+	}
+    else if (password.length < 6) {
         document.getElementById("registerResult").innerHTML = "Password must be at least 6 characters.";
         return;
     }
@@ -116,11 +126,13 @@ function doSignUp()
 
 				if (userId == 0)
 				{
-					document.getElementById("registerResult").innerHTML = jsonObject.err;
+					document.getElementById("registerResult").innerHTML = "Something went wrong..";
         			return;
 				}
 				else 
 				{
+					document.getElementById("registerResult").innerHTML = jsonObject.msg;
+					// sleep?
 					window.location.href = "login.html";
 				}
 			}
@@ -174,9 +186,10 @@ function readCookie()
 		}
 	}
 	
-	if( userId < 0 )
+	if( userId <= 0 )
 	{
 		window.location.href = "login.html";
+		document.getElementById("loginResult").innerHTML = "You're not allowed to be there";
 	}
 	else
 	{
@@ -190,7 +203,9 @@ function doLogout()
 	firstName = "";
 	lastName = "";
 	document.cookie = "firstName= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+
 	window.location.href = "login.html";
+	document.getElementById("loginResult").innerHTML = "Successfully logged out!";
 }
 
 function addContact()
@@ -199,9 +214,10 @@ function addContact()
 	let contactEmail = document.getElementById("conEmail").value;
 	let contactPhone = document.getElementById("conPhone").value;
 
-	document.getElementById("conName").value = "";
-	document.getElementById("conEmail").value = "";
-	document.getElementById("conPhone").value = "";
+	if (contactName.length === 0 || contactEmail.length === 0 || contactPhone.length === 0)
+	{
+		document.getElementById("contactAddResult").innerHTML = "No empty field(s) please!";
+	}
 	
 	document.getElementById("contactAddResult").innerHTML = "";
 
@@ -223,6 +239,10 @@ function addContact()
 		{
 			if (this.readyState == 4 && this.status == 200) 
 			{
+				document.getElementById("conName").value = "";
+				document.getElementById("conEmail").value = "";
+				document.getElementById("conPhone").value = "";
+
 				document.getElementById("contactAddResult").innerHTML = "Contact has been added";
 
 				displayContacts();
@@ -242,7 +262,7 @@ function displayContacts()
 	document.getElementById("contactSearches").innerHTML = "";
 	document.getElementById("contactList").innerHTML = "";
 	
-	let contactList = "";
+	let listOfContacts = "";
 
 	let url = urlBase + '/ReadContact.' + extension;
 	
@@ -256,13 +276,15 @@ function displayContacts()
 			if (this.readyState == 4 && this.status == 200) 
 			{
 				let jsonObject = JSON.parse( xhr.responseText );
-				document.getElementById("contactSearches").innerHTML = jsonObject.searches + " entries";
+
+				document.getElementById("contactSearches").innerHTML = 
+				(jsonObject.searches === 0) ? jsonObject.err : jsonObject.searches + " entries";
 				
 				for( let i = 0; i < jsonObject.searches; i++ )
 				{
 					contact = jsonObject.results[i];
 
-					contactList += `
+					listOfContacts += `
 						<div class="contactInfo" id="${contact.userID}">
 							<h3 id="name">${contact.name}</h3>
 							<p><strong>Email:</strong></p>
@@ -290,10 +312,10 @@ function displayContacts()
 
 function editContact(btn) 
 {
-	let name = btn.parentNode.querySelector("#name").innerText;
+	let name = btn.parentNode.querySelector("#name").innerText.trim();
     let email = btn.parentNode.querySelector("#email").innerText.trim(); 
     let phone = btn.parentNode.querySelector("#phone").innerText.trim();
-    let userID = btn.parentNode.id; // Get user ID from div ID
+    const userID = btn.parentNode.id; // Get user ID from div ID
 
 	btn.parentNode.innerHTML = `
 		<div id="editForm">
@@ -311,10 +333,19 @@ function editContact(btn)
 function saveEdit(btn, userID) {
 	let url = urlBase + '/UpdateContact.' + extension;
 
+	let newName = btn.parentNode.querySelector("#editName").value.trim();
+	let newEmail = btn.parentNode.querySelector("#editEmail").value.trim();
+	let	newPhone = btn.parentNode.querySelector("#editPhone").value.trim(); 
+
+	if (newName.length === 0 || newEmail.length === 0 || newPhone.length === 0)
+	{
+		document.getElementById("contactAddResult").innerHTML = "No empty field(s) please!";
+	}
+
 	let jsonPayload = JSON.stringify({
-        name: btn.parentNode.querySelector("#editName").value, 
-        email: btn.parentNode.querySelector("#editEmail").value.trim(), 
-		phone: btn.parentNode.querySelector("#editPhone").value.trim(), 
+        name: newName, 
+        email: newEmail, 
+		phone: newPhone, 
 		userNum: parseInt( userID )
 	});
 
@@ -337,7 +368,7 @@ function saveEdit(btn, userID) {
 	}
 	catch(err)
 	{
-		document.getElementById("contactSearches").innerHTML = err.message;
+		document.getElementById("contactAddResult").innerHTML = err.message;
 	}
 }
 
