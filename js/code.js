@@ -4,6 +4,10 @@ const extension = 'php';
 let userId = 0;
 let firstName = "";
 let lastName = "";
+let users = []
+
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const phoneRegex = /^\d{10}$/;
 
 function doLogin()
 {
@@ -208,16 +212,34 @@ function doLogout()
 	document.getElementById("loginResult").innerHTML = "Successfully logged out!";
 }
 
+function checkValidContact(name, email, phone)
+{
+	if (name.length === 0 || email.length === 0 || phone.length === 0)
+	{
+		document.getElementById("contactAddResult").innerHTML = "No empty field(s) please!";
+		return false;
+	}
+	else if (!emailRegex.test(email))
+	{
+		document.getElementById("contactAddResult").innerHTML = "Not a valid email address!";
+		return false;
+	}
+	else if (phoneRegex.test(phone))
+	{
+		document.getElementById("contactAddResult").innerHTML = "Not a valid phone number!";
+		return false;
+	}
+
+	return true;
+}
+
 function addContact()
 {
 	let contactName = document.getElementById("conName").value;
 	let contactEmail = document.getElementById("conEmail").value;
 	let contactPhone = document.getElementById("conPhone").value;
 
-	if (contactName.length === 0 || contactEmail.length === 0 || contactPhone.length === 0)
-	{
-		document.getElementById("contactAddResult").innerHTML = "No empty field(s) please!";
-	}
+	if (!checkValidContact(contactName, contactEmail, contactPhone)) return;
 	
 	document.getElementById("contactAddResult").innerHTML = "";
 
@@ -260,6 +282,7 @@ function addContact()
 function displayContacts()
 {
 	document.getElementById("contactSearches").innerHTML = "";
+	document.getElementById("contactAddResult").innerHTML = "";
 	document.getElementById("contactList").innerHTML = "";
 	
 	let listOfContacts = "";
@@ -283,6 +306,7 @@ function displayContacts()
 				for( let i = 0; i < jsonObject.searches; i++ )
 				{
 					contact = jsonObject.results[i];
+					users.push(jsonObject.userID);
 
 					listOfContacts += `
 						<div class="contactInfo" id="${contact.userID}">
@@ -337,10 +361,7 @@ function saveEdit(btn, userID) {
 	let newEmail = btn.parentNode.querySelector("#editEmail").value.trim();
 	let	newPhone = btn.parentNode.querySelector("#editPhone").value.trim(); 
 
-	if (newName.length === 0 || newEmail.length === 0 || newPhone.length === 0)
-	{
-		document.getElementById("contactAddResult").innerHTML = "No empty field(s) please!";
-	}
+	if (!checkValidContact(newName, newEmail, newPhone)) return;
 
 	let jsonPayload = JSON.stringify({
         name: newName, 

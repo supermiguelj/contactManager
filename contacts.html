@@ -34,6 +34,14 @@
             <input type="text" id="conEmail" placeholder="Enter your email">
             <input type="text" id="conPhone" placeholder="Enter your phone" maxlength="10">
             <button type="button" id="addContactButton" class="buttons" onclick="addContact();"> Add Contact </button><br />
+
+            <br />
+            <div>
+                <button type="button" id="sort" class="buttons" onclick="sortTable(1);"> Sort Name </button><br /> | 
+                <button type="button" id="sort" class="buttons" onclick="sortTable(2);"> Sort Email </button><br /> |
+                <button type="button" id="sort" class="buttons" onclick="sortTable(3);"> Sort Phone </button><br />
+            </div>
+
             <span id="contactAddResult"></span>
     
             <br />
