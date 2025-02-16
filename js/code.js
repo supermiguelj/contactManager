@@ -340,7 +340,7 @@ function displayContacts()
 	}
 	
 }
-/*
+
 // Searches for contact by nameu using API to communicate with MariaDB
 function searchContact()
 {
@@ -372,7 +372,7 @@ function searchContact()
 					// Valid SQL query was retrieved
 					if (response.success) {
 						console.log("Contacts Found!");
-						displayContacts(response.contacts); // Overloaded function that displays returned contacts
+						displaySearchedContacts(response.contacts);
 					} else { // Nothing found
 						console.log("No contacts found!");
 						displayContacts([]); // Displays nothing
@@ -388,8 +388,8 @@ function searchContact()
 		xhr.send(jsonPayload);
 }
 
-// Overloaded method to display contacts for search bar
-function displayContacts(contacts)
+// function to display contacts for search bar
+function displaySearchedContacts(contacts)
 {
 	let resultsDiv = document.getElementById("contactList");
 	let listOfContacts = "";
@@ -421,7 +421,7 @@ function displayContacts(contacts)
 	// Displays the contacts
 	resultsDiv.innerHTML = listOfContacts;
 }
-*/
+
 function editContact(btn) 
 {
 	let name = btn.parentNode.querySelector("#name").innerText.trim();
