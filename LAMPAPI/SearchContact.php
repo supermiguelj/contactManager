@@ -1,17 +1,23 @@
 <?php
+    header("Content-Type: application/json");
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Methods: POST");
+    header("Access-Control-Allow-Headers: Content-Type");
+    
+
     // Gets POST request from searchContact() function in code.js
     $inData = getRequestInfo();
     
     // Connects to MariaDB
     $database = new mysqli("localhost", "Test", "Dummy", "Manager");
-    
+
     if ( $database->connect_error ) { // Invalid connection
 		die(json_encode(["success" => false, "message" => $database->connect_error]));
 	} else { // Connection Established
         // Cleans the search (% allows for incomplete words)
         $name = "%" . $database->real_escape_string($inData->name) . "%";
         // Prepares query to search for contact by name
-        $prepStmt = $database->prepare("SELECT * FROM Contacts WHERE name LIKE ?");
+        $prepStmt = $database->prepare("SELECT id, name, email, phone FROM Contacts WHERE name LIKE ?");
         $prepStmt->bind_param("s", $name);
         $prepStmt->execute();
 
@@ -37,7 +43,7 @@
 
     // Used to unpack and retrieve raw JSON output
     function getRequestInfo() {
-		return json_decode(file_get_contents('php://input'));
+		return json_decode(file_get_contents('php://input'), true);
 	}
 
     // Sends back the results as JSON

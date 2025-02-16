@@ -367,7 +367,7 @@ function searchContact()
 		xhr.onreadystatechange = function() {
 			if (this.readyState === 4 && this.status === 200) {
 				try {
-					let response = jsonPayload.parse(xhr.responseText);
+					let response = JSON.parse(xhr.responseText);
 
 					// Valid SQL query was retrieved
 					if (response.success) {
