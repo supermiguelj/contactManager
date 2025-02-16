@@ -356,7 +356,7 @@ function searchContact()
 	});
 	
 	// Holds the url to the correct API endpoint
-	let url = urlBase + '/searchContact.' + extension;
+	let url = urlBase + '/SearchContact.' + extension;
 	// Allows for information to be retrieved without refreshing page
 	let xhr = new XMLHttpRequest();
 	// Sets request address and command to the designated url for the correct API endpoint and to POST
@@ -367,6 +367,11 @@ function searchContact()
 		xhr.onreadystatechange = function() {
 			if (this.readyState === 4 && this.status === 200) {
 				try {
+					// Ensures no crash if php returns empty response
+					if (!xhr.responseText) {
+						console.error("Empty response from server.");
+						return;
+					}
 					let response = JSON.parse(xhr.responseText);
 
 					// Valid SQL query was retrieved
@@ -375,7 +380,8 @@ function searchContact()
 						displaySearchedContacts(response.contacts);
 					} else { // Nothing found
 						console.log("No contacts found!");
-						displayContacts([]); // Displays nothing
+						// Displays nothing
+						document.getElementById("contactList").innerHTML = "<p>No Contacts found!</p>";
 					}
 				} catch (error) { // Catches error for debugging
 					console.error("Error parsing response: " + error);
@@ -406,7 +412,7 @@ function displaySearchedContacts(contacts)
 
 	// Loops through each contact in the contacts JSON, displaying each contact on the page
 	contacts.forEach(contact => {
-		listOfContacts += `<div class="contactInfo" id="${contact.userID}">
+		listOfContacts += `<div class="contactInfo" id="${contact.id}">
 			<h3 id="name">${contact.name}</h3>
 			<p><strong>Email:</strong></p>
 			<p id="email"> ${contact.email}</p>
