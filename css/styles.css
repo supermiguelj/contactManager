@@ -1,25 +1,108 @@
-body 
-{
-    background-color: #707070;
-}
-
-#title 
-{
-    font-size: 40px;
-    width: 100%;
-    margin: 2% 5%;
-    text-align: center;
+body {
     font-family: 'Ubuntu', sans-serif;
-    color: #FFFFFF;
+    background-color: #ffffff;
+    background-image: linear-gradient(to bottom right, rgb(65,100,144), rgb(50,130,80));
+    display: block;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: auto;
 }
 
-#loginDiv
-{
-    font-size: 30px;
-    width: 70%;
-    margin-left: 15%;
-    padding: 25px;
-    background-color: #b2b2b2;
+/* Container for the login form */
+#loginDiv {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 20px 40px;
+    border: 1px solid rgba(255, 255, 255, 255);
+    border-radius: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), inset 0 0 10px rgba(255, 255, 255, 0.4); 
+    text-align: center;
+    width: 580px;
+    margin: auto;
+    margin-top: 50px;
+}
+
+/* Title styling */
+#title {
+    color: rgb(255,255,255);
+    text-align: center;
+    margin: auto;
+    margin-bottom: 20px;
+}
+
+/* Inner title styling */
+#inner-title {
+    font-size: 32px;
+    color: #ffffff;
+    display: block;
+    text-align: center;
+    margin: auto;
+}
+
+/* Input field styling */
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: transparent;
+    color: white;
+    outline: none;
+}
+
+input[type="text"]::placeholder, input[type="password"]::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Button styling */
+.buttons {
+    width: 50%;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    margin-top: 10px;
+    border: 1px solid rgba(255, 255, 255, 255);
+    border-radius: 2px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+    text-align: center;
+}
+
+.buttons:hover {
+    background-color: rgba(255, 255, 255, 0.6);
+}
+
+/* Error message styling */
+#errorMessage {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+    display: none;
+}
+
+/* Sign up button styling */
+#signUpButton {
+    width: auto;
+    background-color: rgba(40,167,69,0.8);
+    border-radius: 12px;
+    border-color: rgba(25,150,50,1);
+    display: block;
+    margin: auto;
+    margin-top: 20px;
+}
+
+#signUpButton:hover {
+    background-color: #218838;
+}
+
+hr {
+  display:block;
+  height: 0;
+  border: 2px solid #ffffff;
+  margin: 3px;
 }
 
 #loggedInDiv
@@ -40,21 +123,6 @@ body
     background-color: #b2b2b2;
 }
 
-.buttons
-{
-    font-size: 30px;
-    border-radius: 25px;
-    width: 50%;
-    margin-left: 25%;
-    font-family: 'Ubuntu', sans-serif;
-}
-
-.buttons:hover{
-    background-color: #00d5124f;
-    color: #FFFFFF;
-    opacity: 50%;
-}
-
 #loginName
 {
 	font-size: 30px;
@@ -72,28 +140,8 @@ body
 	font-size: 30px;
 }
 
-input[type="text"],input[type="password"]{
-    border-radius: 25px;
-    text-align: center;
-    width: 80%;
-    margin-left: 10%;
-    margin-bottom: 2%;
-    font-family: 'Ubuntu', sans-serif;
-}
-
-#inner-title{
-    display: inline-block;
-    font-size: 0.8em;
-    width: 90%;
-    text-align: center;
-    margin-left: 5%;
-    margin-bottom: 2%;
-    font-family: 'Ubuntu', sans-serif;
-    color: #95060a;
-}
-
 #loginResult{
-    display: inline-block;
+    display: block;
     font-size: 0.8em;
     width: 90%;
     text-align: center;
