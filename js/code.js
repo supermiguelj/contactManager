@@ -286,6 +286,50 @@ function addContact()
 
 }
 
+// Searches for contact by nameu using API to communicate with MariaDB
+function searchContact()
+{
+	// gets contact name from the contact search bar using ID
+	let contactName = document.getElementById("searchContact").value;
+	
+	// Injects payload
+	let jsonPayload = JSON.stringify({
+		name: contactName,
+	});
+	
+	// Holds the url to the correct API endpoint
+	let url = urlBase + '/searchContact.' + extension;
+	// Allows for information to be retrieved without refreshing page
+	let xhr = new XMLHttpRequest();
+	// Sets request address and command to the designated url for the correct API endpoint and to POST
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+		// handles API response
+		xhr.onreadystatechange = function() {
+			if (this.readyState === 4 && this.status === 200) {
+				try {
+					let response = jsonPayload.parse(xhr.responseText);
+
+					// Valid SQL query was retrieved
+					if (response.success) {
+						console.log("Contacts Found!");
+						displayContacts(response.contacts); // Overloaded function that displays returned contacts
+					} else { // Nothing found
+						console.log("No contacts found!");
+						displayContacts([]); // Displays nothing
+					}
+				} catch (error) { // Catches error for debugging
+					console.error("Error parsing response: " + error);
+				}
+			} else { // Used for debugging
+				console.error("Error: ", xhr.status, xhr.statusText);
+			}
+		};
+		// Sends POST request of the json containing the name from the contact search bar to be used by the API
+		xhr.send(jsonPayload);
+}
+
 function displayContacts()
 {
 	document.getElementById("contactSearches").innerHTML = "";
