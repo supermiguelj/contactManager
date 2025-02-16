@@ -224,7 +224,7 @@ function checkValidContact(name, email, phone)
 		document.getElementById("contactAddResult").innerHTML = "Not a valid email address!";
 		return false;
 	}
-	else if (phoneRegex.test(phone))
+	else if (!phoneRegex.test(phone))
 	{
 		document.getElementById("contactAddResult").innerHTML = "Not a valid phone number!";
 		return false;
