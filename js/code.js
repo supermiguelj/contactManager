@@ -340,7 +340,7 @@ function displayContacts()
 	}
 	
 }
-
+/*
 // Searches for contact by nameu using API to communicate with MariaDB
 function searchContact()
 {
@@ -421,7 +421,7 @@ function displayContacts(contacts)
 	// Displays the contacts
 	resultsDiv.innerHTML = listOfContacts;
 }
-
+*/
 function editContact(btn) 
 {
 	let name = btn.parentNode.querySelector("#name").innerText.trim();
