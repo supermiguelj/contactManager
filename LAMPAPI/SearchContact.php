@@ -13,11 +13,11 @@
 	}
     else // Connection Established
     {
-        // Cleans the search (% allows for incomplete words)
-        $name = "%" . $database->real_escape_string($inData->name) . "%";
+        // % allows for incomplete words
+        $name = "%" . $inData->name . "%";
 
         // Prepares query to search for contact by name
-        $prepStmt = $database->prepare("SELECT name, email, phone, userID FROM Contacts WHERE name LIKE ?");
+        $prepStmt = $database->prepare("SELECT * FROM Contacts WHERE name LIKE ?");
         $prepStmt->bind_param("s", $name);
         $prepStmt->execute();
 
