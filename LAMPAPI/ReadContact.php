@@ -54,7 +54,7 @@
 	{
 		$retValue = '{
 			"searches": 0,
-			"err":"' . $err . '"
+			"msg":"' . $err . '"
 		}';
 		sendResultInfoAsJson( $retValue );
 	}
