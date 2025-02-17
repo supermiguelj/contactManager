@@ -348,7 +348,7 @@ function displayContacts()
 function searchContact()
 {
 	// gets contact name from the contact search bar using ID
-	let contactName = document.getElementById("searchContact").value;
+	let contactName = document.getElementById("searchContact").value.trim();
 
 	// Returns default table if search bar is blank
 	if (contactName.length === 0) 
