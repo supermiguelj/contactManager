@@ -14,7 +14,7 @@
     else // Connection Established
     {
         // % allows for incomplete words
-        $name = "%" . $inData->name . "%";
+        $name = "'%" . $inData["name"] . "%'";
 
         // Prepares query to search for contact by name
         $prepStmt = $database->prepare("SELECT * FROM Contacts WHERE name LIKE ?");
