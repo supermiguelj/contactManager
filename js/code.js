@@ -4,7 +4,6 @@ const extension = 'php';
 let userId = 0;
 let firstName = "";
 let lastName = "";
-let users = []
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const phoneRegex = /^\d{10}$/;
@@ -286,13 +285,39 @@ function addContact()
 
 }
 
+function createContactList(parsedContacts)
+{
+	let listOfContacts = "";
+
+	document.getElementById("contactSearches").innerHTML = 
+	(parsedContacts.searches === 0) ? parsedContacts.msg : parsedContacts.searches + " entries";
+	
+	for( let i = 0; i < parsedContacts.searches; i++ )
+	{
+		contact = parsedContacts.results[i];
+
+		listOfContacts += `
+			<div class="contactInfo" id="${contact.userID}">
+				<h3 id="name">${contact.name}</h3>
+				<p><strong>Email:</strong></p>
+				<p id="email"> ${contact.email}</p>
+				<p><strong>Phone:</strong> </p>
+				<p id="phone"> ${contact.phone}</p>
+				<button onclick="editContact(this);">Edit</button>
+				<button onclick="deleteContact(this);">Delete</button>
+			</div>
+			<hr>
+		`;
+	}
+	
+	document.getElementById("contactList").innerHTML = listOfContacts;
+}
+
 function displayContacts()
 {
 	document.getElementById("contactSearches").innerHTML = "";
 	document.getElementById("contactAddResult").innerHTML = "";
 	document.getElementById("contactList").innerHTML = "";
-	
-	let listOfContacts = "";
 
 	let url = urlBase + '/ReadContact.' + extension;
 	
@@ -307,29 +332,7 @@ function displayContacts()
 			{
 				let jsonObject = JSON.parse( xhr.responseText );
 
-				document.getElementById("contactSearches").innerHTML = 
-				(jsonObject.searches === 0) ? jsonObject.err : jsonObject.searches + " entries";
-				
-				for( let i = 0; i < jsonObject.searches; i++ )
-				{
-					contact = jsonObject.results[i];
-					users.push(jsonObject.userID);
-
-					listOfContacts += `
-						<div class="contactInfo" id="${contact.userID}">
-							<h3 id="name">${contact.name}</h3>
-							<p><strong>Email:</strong></p>
-							<p id="email"> ${contact.email}</p>
-							<p><strong>Phone:</strong> </p>
-							<p id="phone"> ${contact.phone}</p>
-							<button onclick="editContact(this);">Edit</button>
-							<button onclick="deleteContact(this);">Delete</button>
-						</div>
-						<hr>
-					`;
-				}
-				
-				document.getElementById("contactList").innerHTML = listOfContacts;
+				createContactList(jsonObject);
 			}
 		};
 		xhr.send();
@@ -348,7 +351,11 @@ function searchContact()
 	let contactName = document.getElementById("searchContact").value;
 
 	// Returns default table if search bar is blank
-	if (contactName.length === 0) {displayContacts(); return;}
+	if (contactName.length === 0) 
+	{
+		displayContacts(); 
+		return;
+	}
 	
 	// Injects payload
 	let jsonPayload = JSON.stringify({
@@ -362,70 +369,34 @@ function searchContact()
 	// Sets request address and command to the designated url for the correct API endpoint and to POST
 	xhr.open("POST", url, true);
 	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-
-		// handles API response
-		xhr.onreadystatechange = function() {
-			if (this.readyState === 4 && this.status === 200) {
-				try {
-					// Ensures no crash if php returns empty response
-					if (!xhr.responseText) {
-						console.error("Empty response from server.");
-						return;
-					}
-					let response = JSON.parse(xhr.responseText);
-
-					// Valid SQL query was retrieved
-					if (response.success) {
-						console.log("Contacts Found!");
-						displaySearchedContacts(response.contacts);
-					} else { // Nothing found
-						console.log("No contacts found!");
-						// Displays nothing
-						document.getElementById("contactList").innerHTML = "<p>No Contacts found!</p>";
-					}
-				} catch (error) { // Catches error for debugging
-					console.error("Error parsing response: " + error);
+	// handles API response
+	try
+	{
+		xhr.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				let jsonObject = JSON.parse( xhr.responseText );
+	
+				// Valid SQL query was retrieved
+				if (response.success) 
+				{
+					createContactList(jsonObject);
+				} 
+				else // Nothing found
+				{
+					// Displays nothing
+					document.getElementById("contactAddResult").innerHTML = jsonObject.msg;
 				}
-			} else { // Used for debugging
-				console.error("Error: ", xhr.status, xhr.statusText);
 			}
 		};
 		// Sends POST request of the json containing the name from the contact search bar to be used by the API
 		xhr.send(jsonPayload);
-}
-
-// function to display contacts for search bar
-function displaySearchedContacts(contacts)
-{
-	let resultsDiv = document.getElementById("contactList");
-	let listOfContacts = "";
-	// Clears previous display
-	document.getElementById("contactSearches").innerHTML = "";
-	document.getElementById("contactAddResult").innerHTML = "";
-	resultsDiv.innerHTML = "";
-
-	// SQL query returned zero contacts
-	if (contacts.length === 0) {
-		resultsDiv.innerHTML = "<p>No Contacts found!</p>";
-		return;
 	}
-
-	// Loops through each contact in the contacts JSON, displaying each contact on the page
-	contacts.forEach(contact => {
-		listOfContacts += `<div class="contactInfo" id="${contact.id}">
-			<h3 id="name">${contact.name}</h3>
-			<p><strong>Email:</strong></p>
-			<p id="email"> ${contact.email}</p>
-			<p><strong>Phone:</strong> </p>
-			<p id="phone"> ${contact.phone}</p>
-			<button onclick="editContact(this);">Edit</button>
-			<button onclick="deleteContact(this);">Delete</button>
-		</div>
-		<hr>`
-	});
-
-	// Displays the contacts
-	resultsDiv.innerHTML = listOfContacts;
+	catch(err)
+	{
+		document.getElementById("contactAddResult").innerHTML = err.message;
+	}
 }
 
 function editContact(btn) 
