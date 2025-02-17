@@ -379,7 +379,7 @@ function searchContact()
 				let jsonObject = JSON.parse( xhr.responseText );
 	
 				// Valid SQL query was retrieved
-				if (response.success) 
+				if (jsonObject.success) 
 				{
 					createContactList(jsonObject);
 				} 
