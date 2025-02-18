@@ -508,14 +508,12 @@ function searchContact()
 
 function editContact(btn, state) 
 {
-	let contactDiv = document.getElementById(btn);
+	let contactTable = document.getElementById(btn);
 
-	let name = contactDiv.querySelector("#name").innerText.trim();
-    let email = contactDiv.querySelector("#email").innerText.trim(); 
-    let phone = contactDiv.querySelector("#phone").innerText.trim();
+	let name = contactTable.querySelector("#name").innerText.trim();
+    let email = contactTable.querySelector("#email").innerText.trim(); 
+    let phone = contactTable.querySelector("#phone").innerText.trim();
     const userID = btn;
-
-	console.log(name + " " + email + " " + phone + " " + userID);
 
 	if (state === null && historyHead.next == null)
 	{
@@ -528,7 +526,7 @@ function editContact(btn, state)
 		selectState = historyHead;
 	}
 
-	btn.innerHTML = `
+	contactTable.innerHTML = `
 		<tr id="editForm">
 			<td><input type="text" id="editName" value="${name}"></td>
 			<td><input type="email" id="editEmail" value="${email}"></td>
