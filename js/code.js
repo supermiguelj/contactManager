@@ -526,6 +526,8 @@ function editContact(btn, state)
 		saveData.history = historyHead;
 		saveData.state = selectState;
 
+		console.log(saveData.history + " editContact " + saveData.state);
+
 		historyHead = selectState;
 		temp.prev = historyHead;
 		historyHead.next = temp;
@@ -549,6 +551,8 @@ function cancelEdit()
 {
 	historyHead = saveData.history;
 	selectState = saveData.state;
+
+	console.log(saveData.history + " cancelEdit " + saveData.state);
 
 	saveData.history = null;
 	saveData.state = null;
