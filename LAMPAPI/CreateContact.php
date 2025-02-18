@@ -11,7 +11,7 @@
 	else
 	{
 		// Check if the contact already exists
-        $checkStmt = $database->prepare("SELECT ID FROM Contacts WHERE name = ? AND email = ? AND phone = ?");
+        $checkStmt = $database->prepare("SELECT * FROM Contacts WHERE name = ? AND email = ? AND phone = ?");
 		$checkStmt->bind_param("sss", $inData["name"], $inData["email"], $inData["phone"]);	
         $checkStmt->execute();
         $checkStmt->store_result();
