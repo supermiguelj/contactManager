@@ -291,7 +291,7 @@ function addContact(state, oldID = null)
 	document.getElementById("contactAddResult").innerHTML = "";
 
 	// Generates userID
-	let tempUserID = Math.floor(Math.random() * 90000) + 1000;
+	let tempUserID = Math.floor(Math.random() * 90000) + 10000;
 
 	// Used to check if generated userID has been taken by previous contact or not
 	// I'll handle this tomorrow ~ Miguel
@@ -301,7 +301,7 @@ function addContact(state, oldID = null)
 		name: contactName,
         email: contactEmail,
 		phone: contactPhone,
-        userID: (oldID == null) ? tempUserID : oldID,
+        userID: (oldID == null) ? tempUserID : oldID
 	});
 
 	let url = urlBase + '/CreateContact.' + extension;
