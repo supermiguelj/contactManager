@@ -382,7 +382,7 @@ function createContactList(parsedContacts)
 				<td id="name">${contact.name}</td>
 				<td id="email">${contact.email}</td>
 				<td id="phone">${contact.phone}</td>
-				<td><button onclick="editContact(${contact.userID}, null);">Edit</button></td>
+				<td><button onclick="editContact(${contact.userID});">Edit</button></td>
 				<td><button onclick="deleteContact(${contact.userID}, true);">Delete</button></td>
 			</tr>
 		`;
@@ -512,7 +512,7 @@ function searchContact()
 	}
 }
 
-function editContact(btn, state) 
+function editContact(btn) 
 {
 	let contactTable = document.getElementById(btn);
 
@@ -521,50 +521,20 @@ function editContact(btn, state)
     let phone = contactTable.querySelector("#phone").innerText.trim();
     const userID = btn;
 
-	if (state === null && historyHead.next == null)
-	{
-		let temp = new contactHistory(name, email, phone, userID, "edit");
-
-		// deep copy
-		savedHistory = Object.assign({}, historyHead);
-	 	savedState = Object.assign({}, selectState);
-
-		historyHead = selectState;
-		temp.prev = historyHead;
-		historyHead.next = temp;
-
-		historyHead = historyHead.next;
-		selectState = historyHead;
-	}
+	let old = new contactHistory(name, email, phone, userID, "edit");
 
 	contactTable.innerHTML = `
 		<tr id="editForm">
 			<td><input type="text" id="editName" value="${name}"></td>
 			<td><input type="email" id="editEmail" value="${email}"></td>
 			<td><input type="text" id="editPhone" value="${phone}"></td>
-			<td><button onclick="saveEdit(this, ${userID}, null);">Save</button></td>
-			<td><button onclick="cancelEdit();">Cancel</button></td>
+			<td><button onclick="saveEdit(this, ${userID}, null, ${old});">Save</button></td>
+			<td><button onclick="displayContacts();">Cancel</button></td>
 		</tr>
 	`;
 }
 
-function cancelEdit()
-{
-	historyHead = Object.assign({}, savedHistory);
-	selectState = Object.assign({}, savedState);
-
-	console.log(historyHead);
-	console.log("cancelEdit");
-	console.log(selectState);
-
-	savedHistory = null;
-	savedState = null;
-
-	updateState(selectState);
-	displayContacts();
-}
-
-function saveEdit(btn, userID, state) {
+function saveEdit(btn, userID, state, old = null) {
 	let url = urlBase + '/UpdateContact.' + extension;
 	let newName = newEmail = newPhone = null;
 
@@ -626,11 +596,15 @@ function saveEdit(btn, userID, state) {
 				if (state === null && historyHead.next == null)
 				{
 					let temp = new contactHistory(newName, newEmail, newPhone, userID, "edit");
-					historyHead = selectState;
-					temp.prev = historyHead;
-					historyHead.next = temp;
 
-					historyHead = historyHead.next;
+					historyHead = selectState;
+
+					temp.prev = old;
+					old.next = temp;
+					old.prev = historyHead;
+					historyHead.next = old;
+
+					historyHead = historyHead.next.next;
 					selectState = historyHead;
 					updateState(selectState);
 				}
