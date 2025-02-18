@@ -550,8 +550,8 @@ function editContact(btn, state)
 
 function cancelEdit()
 {
-	historyHead = savedHistory;
-	selectState = savedState;
+	historyHead = Object.assign({}, savedHistory);
+	selectState = Object.assign({}, savedState);
 
 	console.log(historyHead);
 	console.log("cancelEdit");
