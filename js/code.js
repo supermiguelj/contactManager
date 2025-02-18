@@ -553,9 +553,9 @@ function saveEdit(btn, userID, state) {
 
 	if (state === null)
 	{
-		newName = btn.parentNode.querySelector("#editName").value.trim();
-		newEmail = btn.parentNode.querySelector("#editEmail").value.trim();
-		newPhone = btn.parentNode.querySelector("#editPhone").value.trim();
+		newName = btn.closest("tr").querySelector("#editName").value.trim();
+		newEmail = btn.closest("tr").querySelector("#editEmail").value.trim();
+		newPhone = btn.closest("tr").querySelector("#editPhone").value.trim();
 	}
 	else if (state === "prev")
 	{
