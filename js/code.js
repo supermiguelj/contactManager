@@ -441,6 +441,9 @@ function displayContacts()
 					
 					curr = curr.prev;
 				}
+				console.log(historyHead);
+				console.log("displayContacts");
+				console.log(selectState);
 				// console.log(historyHead);
 				document.getElementById("editList").innerHTML = list;
 			}
@@ -549,6 +552,10 @@ function cancelEdit()
 {
 	historyHead = savedHistory;
 	selectState = savedState;
+
+	console.log(historyHead);
+	console.log("cancelEdit");
+	console.log(selectState);
 
 	savedHistory = null;
 	savedState = null;
