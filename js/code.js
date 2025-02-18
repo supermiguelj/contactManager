@@ -635,7 +635,7 @@ function deleteContact(userID, state)
 	let url = urlBase + '/DeleteContact.' + extension;
 
 	let jsonPayload = JSON.stringify({
-        userID: parseInt( userID.parentNode.id )
+        userID: parseInt( userID )
 	});
 
 	if (state && historyHead.next == null)
