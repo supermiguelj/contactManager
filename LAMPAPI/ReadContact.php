@@ -11,7 +11,7 @@
 	} 
 	else
 	{
-		$prepStmt = $database->prepare("SELECT * FROM Contacts");
+		$prepStmt = $database->prepare("SELECT * FROM Contacts ORDER BY `DateCreated` DESC");
 		$prepStmt->execute();
 		
 		$result = $prepStmt->get_result();

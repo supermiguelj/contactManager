@@ -13,7 +13,7 @@
         <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function() 
         {
-            readCookie();
+            // readCookie();
         }, false);
         </script>
         
@@ -42,6 +42,14 @@
             </div>
 
             <br />
+
+            <div>
+                <button type="button" id="undo" class="buttons" disabled onclick="reverse();"> Undo </button> | 
+                <button type="button" id="redo" class="buttons" disabled onclick="forward();"> Redo </button> |
+            </div>
+
+            <br />
+
             <div>
                 <button type="button" id="sort" class="buttons" onclick="sortTable(1);"> Sort Name </button><br /> | 
                 <button type="button" id="sort" class="buttons" onclick="sortTable(2);"> Sort Email </button><br /> |
@@ -54,9 +62,15 @@
     
             <span id="contactSearches"></span>
             <br />
-            <div id="contactList"></div>
+
+            <table style="width:75%; border:1px solid black;" id="contactList">
+            </table>
     
             <br />
+        </div>
+
+        <div id="editHistory">
+            <ul id="editList"></ul>
         </div>
 
     </body>

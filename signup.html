@@ -15,13 +15,21 @@
 
         <div id="signDiv">
             <span id="inner-title">PLEASE SIGN UP</span>
-            <input type="text" id="registerFirstName" placeholder="Please enter your first name" /><br />
-            <input type="text" id="registerLastName" placeholder="Please enter your last name" /><br />
-            <input type="text" id="registerUsername" placeholder="Please enter username" /><br />
+            <input type="text" id="registerFirstName" placeholder="Please enter your first name" maxlength="20" /><br />
+            <input type="text" id="registerLastName" placeholder="Please enter your last name" maxlength="20" /><br />
+            <input type="text" id="registerUsername" placeholder="Please enter username" maxlength="20" /><br />
             <input type="password" id="registerPassword" placeholder="Please enter password"/><br />
             <button type="button" id="signupButton" class="buttons" onclick="doSignUp();"> Sign up </button>
             <span id="registerResult"></span>
         </div>
+
+        <br />
+
+        <div id="returnLogin" onclick="window.location.href = 'login.html'">
+            <span id="innerTitleSub">Login</span>
+            <p>Do have an account?</p>
+        </div>
+    
 
     </body>
 </html>
