@@ -568,7 +568,6 @@ function saveEdit(btn, userID, state) {
 
 	if (state === null && selectState.name === newName && selectState.email === newEmail && selectState.phone === newPhone) 
 	{
-		cancelEdit();
 		document.getElementById("contactAddResult").innerHTML = "Cannot be same contact!";
 		return;
 	}
