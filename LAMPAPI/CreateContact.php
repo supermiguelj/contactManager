@@ -17,7 +17,7 @@
         $checkStmt->store_result();
         
         if ($checkStmt->num_rows > 0) {
-            returnWithInfo(false, "Contact already exists!");
+            returnWithInfo(False, "Contact already exists!");
 
             $checkStmt->close();
             $database->close();
@@ -30,7 +30,7 @@
 		$prepstmt->bind_param("sssi", $inData["name"], $inData["email"], $inData["phone"], $inData["userID"]);
 		$prepstmt->execute();
 
-		returnWithInfo(true, "Contact successfully added");
+		returnWithInfo(True, "Contact successfully added");
 		
 		$prepstmt->close();
 		$database->close();
