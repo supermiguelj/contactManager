@@ -20,6 +20,7 @@ PRIMARY KEY (`ID`)
 CREATE TABLE IF NOT EXISTS `Manager`.`Contacts`
 (
 `ID` INT NOT NULL AUTO_INCREMENT,
+`DateCreated` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 `name` VARCHAR(50) NOT NULL DEFAULT '',
 `email` VARCHAR(50) NOT NULL DEFAULT '',
 `phone` VARCHAR(50) NOT NULL DEFAULT '',
@@ -36,9 +37,9 @@ INSERT INTO Users (firstName, lastName, username, password) VALUES
 
 -- insert sample data into 'Contacts' table
 INSERT INTO Contacts (name, email, userID) VALUES
-('Bob Ross', 'RossBob@gmail.com', '(123) 456-7890','12345'),
-('Professor Gerber', 'GerberProf123@yahoo.com', '(101) 010-1010','67890'),
-('Test Dummy', 'testdummy@example.com', '(098) 765-4321','13579');
+('Bob Ross', 'RossBob@gmail.com', '1234567890','12345'),
+('Professor Gerber', 'GerberProf123@yahoo.com', '1010101010','67890'),
+('Test Dummy', 'testdummy@example.com', '0987654321','13579');
 
 -- display table
 SELECT * FROM Users;

@@ -17,7 +17,7 @@
         $name = "%" . $inData["name"] . "%";
 
         // Prepares query to search for contact by name
-        $prepStmt = $database->prepare("SELECT * FROM Contacts WHERE name LIKE ?");
+        $prepStmt = $database->prepare("SELECT * FROM Contacts WHERE name LIKE ? ORDER BY `DateCreated` DESC");
         $prepStmt->bind_param("s", $name);
         $prepStmt->execute();
 

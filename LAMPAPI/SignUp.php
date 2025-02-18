@@ -22,8 +22,10 @@
         
         if ($checkStmt->num_rows > 0) {
             returnWithError("Username already taken");
+
             $checkStmt->close();
             $database->close();
+			
             exit();
         }
         $checkStmt->close();
