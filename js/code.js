@@ -8,10 +8,8 @@ let lastName = "";
 var selectState = null;
 var historyHead = null;
 
-var saveData = {
-    state: null,
-    history: null
-};
+var savedState = null;
+var savedHistory = null;
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const phoneRegex = /^\d{10}$/;
@@ -523,10 +521,12 @@ function editContact(btn, state)
 	if (state === null && historyHead.next == null)
 	{
 		let temp = new contactHistory(name, email, phone, userID, "edit");
-		saveData.history = historyHead;
-		saveData.state = selectState;
+		savedHistory = historyHead;
+	 	savedState = selectState
 
-		console.log(saveData.history + " editContact " + saveData.state);
+		 console.log(savedHistory);
+		 console.log("editContact");
+		 console.log(savedState);
 
 		historyHead = selectState;
 		temp.prev = historyHead;
@@ -549,13 +549,15 @@ function editContact(btn, state)
 
 function cancelEdit()
 {
-	historyHead = saveData.history;
-	selectState = saveData.state;
+	historyHead = savedHistory;
+	selectState = savedState;
 
-	console.log(saveData.history + " cancelEdit " + saveData.state);
+	console.log(savedHistory);
+	console.log("cancelEdit");
+	console.log(savedState);
 
-	saveData.history = null;
-	saveData.state = null;
+	savedHistory = null;
+	savedState = null;
 
 	updateState(selectState);
 	displayContacts();
