@@ -361,9 +361,9 @@ function createContactList(parsedContacts)
 {
 	let listOfContacts = `
 		<tr>
-			<th>Name</th>
-			<th>Email</th>
-			<th>Phone</th>
+			<th onclick="sortTable(1);">Name</th>
+			<th onclick="sortTable(2);">Email</th>
+			<th onclick="sortTable(3);">Phone</th>
 			<th>???</th>
 			<th>???</th>
 		</tr>
@@ -380,7 +380,7 @@ function createContactList(parsedContacts)
 			<tr class="contactInfo" id="${contact.userID}">
 				<td id="name">${contact.name}</td>
 				<td id="email">${contact.email}</td>
-				<td id="phone">${contact.phone}</td>
+				<td id="phone">(${(contact.phone).slice(0, 3)}) ${(contact.phone).slice(3, 6)}-${(contact.phone).slice(6, 10)}</td>
 				<td><button onclick="editContact(${contact.userID});">Edit</button></td>
 				<td><button onclick="deleteContact(${contact.userID}, true);">Delete</button></td>
 			</tr>
@@ -440,9 +440,7 @@ function displayContacts()
 					
 					curr = curr.prev;
 				}
-				console.log(historyHead);
-				console.log("displayContacts");
-				console.log(selectState);
+
 				// console.log(historyHead);
 				document.getElementById("editList").innerHTML = list;
 			}
@@ -515,7 +513,7 @@ function editContact(btn)
 {
 	let contactTable = document.getElementById(btn);
 
-	let name = contactTable.querySelector("#name").innerText.trim();
+	let name = contactTable.querySelector("#name").innerText.trim().replace(/\D/g, "");
     let email = contactTable.querySelector("#email").innerText.trim(); 
     let phone = contactTable.querySelector("#phone").innerText.trim();
     const userID = btn;
@@ -566,7 +564,7 @@ function saveEdit(btn, userID, state) {
 
 	if (!checkValidContact(newName, newEmail, newPhone)) return;
 
-	if (state === null && selectState.name === newName && selectState.email === newEmail && selectState.phone === newPhone) 
+	if (state === null && oldContact.name === newName && oldContact.email === newEmail && oldContact.phone === newPhone) 
 	{
 		document.getElementById("contactAddResult").innerHTML = "Cannot be same contact!";
 		return;
