@@ -515,6 +515,8 @@ function editContact(btn, state)
     let phone = contactDiv.querySelector("#phone").innerText.trim();
     const userID = btn;
 
+	console.log(name + " " + email + " " + phone + " " + userID);
+
 	if (state === null && historyHead.next == null)
 	{
 		let temp = new contactHistory(name, email, phone, userID, "edit");
@@ -526,7 +528,7 @@ function editContact(btn, state)
 		selectState = historyHead;
 	}
 
-	btn.parentNode.innerHTML = `
+	btn.innerHTML = `
 		<tr id="editForm">
 			<td><input type="text" id="editName" value="${name}"></td>
 			<td><input type="email" id="editEmail" value="${email}"></td>
