@@ -547,7 +547,7 @@ function cancelEdit()
 	displayContacts();
 }
 
-function saveEdit(btn, userID) {
+function saveEdit(btn, userID, state) {
 	let url = urlBase + '/UpdateContact.' + extension;
 	let newName = newEmail = newPhone = null;
 
