@@ -33,7 +33,7 @@
 	
 	function returnWithInfo( $msg )
 	{
-		$retValue = $retValue = '{
+		$retValue = '{
 			"msg":"' . $msg . '"
 		}';
 		
