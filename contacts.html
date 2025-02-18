@@ -31,10 +31,10 @@
         <div id="accessUIDiv">
             <br />
     
-            <input type="text" id="conName" placeholder="Enter your name">
-            <input type="text" id="conEmail" placeholder="Enter your email">
+            <input type="text" id="conName" placeholder="Enter your name" maxlength="40">
+            <input type="text" id="conEmail" placeholder="Enter your email" maxlength="20">
             <input type="text" id="conPhone" placeholder="Enter your phone" maxlength="10">
-            <button type="button" id="addContactButton" class="buttons" onclick="addContact();"> Add Contact </button><br />
+            <button type="button" id="addContactButton" class="buttons" onclick="addContact(true);"> Add Contact </button><br />
 
             <br />
             <div id="searchContactDiv">
