@@ -1,54 +1,59 @@
 body {
-    font-family: 'Ubuntu', sans-serif;
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-weight: 200;
+    color: #ffffff;
     background-color: #ffffff;
-    background-image: linear-gradient(to bottom right, rgb(65,100,144), rgb(50,130,80));
-    display: block;
+    background-image: linear-gradient(to bottom right, rgb(65,101,143), rgb(54,129,80));
+    display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: auto;
 }
 
-/* Container for the login form */
 #loginDiv {
     background-color: rgba(255, 255, 255, 0.1);
-    padding: 20px 40px;
+    padding: 20px 50px;
     border: 1px solid rgba(255, 255, 255, 255);
     border-radius: 24px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), inset 0 0 10px rgba(255, 255, 255, 0.4); 
     text-align: center;
     width: 580px;
     margin: auto;
-    margin-top: 50px;
 }
 
-/* Title styling */
 #title {
     color: rgb(255,255,255);
     text-align: center;
     margin: auto;
-    margin-bottom: 20px;
 }
 
-/* Inner title styling */
-#inner-title {
+#innerTitle {
     font-size: 32px;
     color: #ffffff;
     display: block;
-    text-align: center;
+    text-align: left;
+    margin: 20px 0px;
+    padding-top: 20px;
+}
+
+#innerTitleSub {
+    font-size: 24px;
+    color: #ffffff;
+    display: block;
+    text-align: left;
     margin: auto;
 }
 
-/* Input field styling */
 input[type="text"], input[type="password"] {
     width: 100%;
-    padding: 10px;
-    margin: 10px 0;
+    padding: 10px, 0;
     border: none;
     border-radius: 4px;
     font-size: 16px;
     background-color: transparent;
-    color: white;
+    color: #ffffff;
     outline: none;
 }
 
@@ -56,53 +61,45 @@ input[type="text"]::placeholder, input[type="password"]::placeholder {
     color: rgba(255, 255, 255, 0.7);
 }
 
-/* Button styling */
 .buttons {
     width: 50%;
     padding: 10px;
     background-color: rgba(255, 255, 255, 0.1);
-    color: white;
+    color: #ffffff;
     font-size: 24px;
     cursor: pointer;
-    margin-top: 10px;
+    margin: 20px 0;
     border: 1px solid rgba(255, 255, 255, 255);
     border-radius: 2px;
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+    transition: text-shadow 0.1s ease-in-out;
     text-align: center;
 }
 
 .buttons:hover {
-    background-color: rgba(255, 255, 255, 0.6);
+    text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.6);
 }
 
-/* Error message styling */
-#errorMessage {
-    color: red;
-    font-size: 14px;
-    margin-top: 10px;
-    display: none;
-}
-
-/* Sign up button styling */
 #signUpButton {
-    width: auto;
-    background-color: rgba(40,167,69,0.8);
-    border-radius: 12px;
-    border-color: rgba(25,150,50,1);
-    display: block;
-    margin: auto;
-    margin-top: 20px;
+    position: fixed;
+    left: 128px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    transition: text-shadow 0.1s ease-in-out;
 }
 
 #signUpButton:hover {
-    background-color: #218838;
+    text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.6);
 }
 
 hr {
   display:block;
   height: 0;
-  border: 2px solid #ffffff;
-  margin: 3px;
+  width: 98%;
+  border: 1px solid #ffffff;
+  padding: 0 10px;
+  margin-bottom: 30px;
 }
 
 #loggedInDiv
@@ -123,32 +120,15 @@ hr {
     background-color: #b2b2b2;
 }
 
-#loginName
-{
-	font-size: 30px;
-}
-#loginPassword
-{
-	font-size: 30px;
-}
-#searchText
-{
-	font-size: 30px;
-}
-#colorText
-{
-	font-size: 30px;
-}
-
 #loginResult{
     display: block;
-    font-size: 0.8em;
-    width: 90%;
+    font-size: 16px;
     text-align: center;
     margin-left: 5%;
     margin-bottom: 2%;
-    font-family: 'Ubuntu', sans-serif;
-    color: #95060a;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    color: #d10000;
 }
 
 #userName{
@@ -168,7 +148,6 @@ select{
     margin-left: 35%;
     margin-top: 2%;
     font-size: 0.75em;
-    font-family: 'Ubuntu', sans-serif;
 }
 
 #colorSearchResult{
@@ -183,6 +162,5 @@ select{
     margin-left: 5%;
     margin-top: 2%;
     margin-bottom: 1%;
-    font-family: 'Ubuntu', sans-serif;
     color: #95060a;
 }
