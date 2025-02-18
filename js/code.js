@@ -513,9 +513,9 @@ function editContact(btn)
 {
 	let contactTable = document.getElementById(btn);
 
-	let name = contactTable.querySelector("#name").innerText.trim().replace(/\D/g, "");
+	let name = contactTable.querySelector("#name").innerText.trim();
     let email = contactTable.querySelector("#email").innerText.trim(); 
-    let phone = contactTable.querySelector("#phone").innerText.trim();
+    let phone = contactTable.querySelector("#phone").innerText.trim().replace(/\D/g, "");
     const userID = btn;
 
 	oldContact = new contactHistory(name, email, phone, userID, "edit");
