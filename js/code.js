@@ -8,8 +8,7 @@ let lastName = "";
 var selectState = null;
 var historyHead = null;
 
-var savedState = null;
-var savedHistory = null;
+let oldContact = null;
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const phoneRegex = /^\d{10}$/;
@@ -521,20 +520,20 @@ function editContact(btn)
     let phone = contactTable.querySelector("#phone").innerText.trim();
     const userID = btn;
 
-	let old = new contactHistory(name, email, phone, userID, "edit");
+	oldContact = new contactHistory(name, email, phone, userID, "edit");
 
 	contactTable.innerHTML = `
 		<tr id="editForm">
 			<td><input type="text" id="editName" value="${name}"></td>
 			<td><input type="email" id="editEmail" value="${email}"></td>
 			<td><input type="text" id="editPhone" value="${phone}"></td>
-			<td><button onclick="saveEdit(this, ${userID}, null, ${JSON.stringify(old)});">Save</button></td>
+			<td><button onclick="saveEdit(this, ${userID}, null);">Save</button></td>
 			<td><button onclick="displayContacts();">Cancel</button></td>
 		</tr>
 	`;
 }
 
-function saveEdit(btn, userID, state, old = null) {
+function saveEdit(btn, userID, state) {
 	let url = urlBase + '/UpdateContact.' + extension;
 	let newName = newEmail = newPhone = null;
 
@@ -596,14 +595,13 @@ function saveEdit(btn, userID, state, old = null) {
 				if (state === null && historyHead.next == null)
 				{
 					let temp = new contactHistory(newName, newEmail, newPhone, userID, "edit");
-					let oldEdit = JSON.parse(old);
 
 					historyHead = selectState;
 
-					temp.prev = oldEdit;
-					oldEdit.next = temp;
-					oldEdit.prev = historyHead;
-					historyHead.next = oldEdit;
+					temp.prev = oldContact;
+					oldContact.next = temp;
+					oldContact.prev = historyHead;
+					historyHead.next = oldContact;
 
 					historyHead = historyHead.next.next;
 					selectState = historyHead;
