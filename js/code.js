@@ -441,7 +441,7 @@ function displayContacts()
 					
 					curr = curr.prev;
 				}
-				console.log(historyHead);
+				// console.log(historyHead);
 				document.getElementById("editList").innerHTML = list;
 			}
 		};
@@ -521,12 +521,10 @@ function editContact(btn, state)
 	if (state === null && historyHead.next == null)
 	{
 		let temp = new contactHistory(name, email, phone, userID, "edit");
-		savedHistory = historyHead;
-	 	savedState = selectState
 
-		 console.log(savedHistory);
-		 console.log("editContact");
-		 console.log(savedState);
+		// deep copy
+		savedHistory = Object.assign({}, historyHead);
+	 	savedState = Object.assign({}, selectState);
 
 		historyHead = selectState;
 		temp.prev = historyHead;
@@ -551,10 +549,6 @@ function cancelEdit()
 {
 	historyHead = savedHistory;
 	selectState = savedState;
-
-	console.log(savedHistory);
-	console.log("cancelEdit");
-	console.log(savedState);
 
 	savedHistory = null;
 	savedState = null;
@@ -716,7 +710,7 @@ function reverse()
 
 	selectState = selectState.prev;
 	updateState(selectState);
-	console.log(selectState);
+	// console.log(selectState);
 }
 
 function forward()
@@ -740,5 +734,5 @@ function forward()
 
 	selectState = selectState.next;
 	updateState(selectState);
-	console.log(selectState);
+	// console.log(selectState);
 }
