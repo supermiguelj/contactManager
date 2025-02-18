@@ -17,7 +17,7 @@
         $checkStmt->store_result();
         
         if ($checkStmt->num_rows > 0) {
-            returnWithInfo(False, "Contact already exists!");
+            returnWithInfo( false, "Contact already exists!" );
 
             $checkStmt->close();
             $database->close();
@@ -30,7 +30,7 @@
 		$prepstmt->bind_param("sssi", $inData["name"], $inData["email"], $inData["phone"], $inData["userID"]);
 		$prepstmt->execute();
 
-		returnWithInfo(True, "Contact successfully added");
+		returnWithInfo( true, "Contact successfully added" );
 		
 		$prepstmt->close();
 		$database->close();
@@ -44,15 +44,15 @@
 	function sendResultInfoAsJson( $obj )
 	{
 		header('Content-type: application/json');
-		echo $obj;
+		echo json_encode($obj);
 	}
 
 	function returnWithInfo( $state, $msg )
 	{
-		$retValue = '{
-			"success:' . $state . ',
-			"msg":"' . $msg . '"
-		}';
+		$retValue = [
+			"success" => $state,
+			"msg" => $msg
+		];
 		
 		sendResultInfoAsJson( $retValue );
 	}
