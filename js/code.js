@@ -528,7 +528,7 @@ function editContact(btn)
 			<td><input type="text" id="editName" value="${name}"></td>
 			<td><input type="email" id="editEmail" value="${email}"></td>
 			<td><input type="text" id="editPhone" value="${phone}"></td>
-			<td><button onclick="saveEdit(this, ${userID}, null, ${old});">Save</button></td>
+			<td><button onclick="saveEdit(this, ${userID}, null, ${JSON.stringify(old)});">Save</button></td>
 			<td><button onclick="displayContacts();">Cancel</button></td>
 		</tr>
 	`;
@@ -596,13 +596,14 @@ function saveEdit(btn, userID, state, old = null) {
 				if (state === null && historyHead.next == null)
 				{
 					let temp = new contactHistory(newName, newEmail, newPhone, userID, "edit");
+					let oldEdit = JSON.parse(old);
 
 					historyHead = selectState;
 
-					temp.prev = old;
-					old.next = temp;
-					old.prev = historyHead;
-					historyHead.next = old;
+					temp.prev = oldEdit;
+					oldEdit.next = temp;
+					oldEdit.prev = historyHead;
+					historyHead.next = oldEdit;
 
 					historyHead = historyHead.next.next;
 					selectState = historyHead;
