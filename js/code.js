@@ -379,8 +379,8 @@ function createContactList(parsedContacts)
 				<td id="name">${contact.name}</td>
 				<td id="email">${contact.email}</td>
 				<td id="phone">${contact.phone}</td>
-				<td><button onclick="editContact(this);">Edit</button></td>
-				<td><button onclick="deleteContact(this);">Delete</button></td>
+				<td><button onclick="editContact(${contact.userID}, null);">Edit</button></td>
+				<td><button onclick="deleteContact(${contact.userID}, true);">Delete</button></td>
 			</tr>
 		`;
 	}
@@ -531,8 +531,8 @@ function editContact(btn, state)
 			<td><input type="text" id="editName" value="${name}"></td>
 			<td><input type="email" id="editEmail" value="${email}"></td>
 			<td><input type="text" id="editPhone" value="${phone}"></td>
-			<td><button onclick="saveEdit(this, ${userID});">Save</button></td>
-			<td><button onclick="displayContacts();">Cancel</button></td>
+			<td><button onclick="saveEdit(this, ${userID}, null);">Save</button></td>
+			<td><button onclick="cancelEdit();">Cancel</button></td>
 		</tr>
 	`;
 }
