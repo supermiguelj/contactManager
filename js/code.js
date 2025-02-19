@@ -634,7 +634,7 @@ function saveEdit(btn, contactID, state, oldDate) {
 	}
 }
 
-function deleteContact(contactID, state, oldDate) 
+function deleteContact(contactID, oldDate, state) 
 {
 	// Are you sure??
 	let url = urlBase + '/DeleteContact.' + extension;
