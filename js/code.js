@@ -284,11 +284,11 @@ function checkValidContact(name, email, phone)
 	return true;
 }
 
-function addContact(state, oldID = null, conDate = null)
+function addContact(state, oldID = null, conDate = null, oldName = null)
 {
-	let contactName = document.getElementById("conName").value;
-	let contactEmail = document.getElementById("conEmail").value;
-	let contactPhone = document.getElementById("conPhone").value;
+	let contactName = (oldName === null) ? document.getElementById("conName").value : oldName[0];
+	let contactEmail = (oldName === null) ? document.getElementById("conEmail").value : oldName[1];
+	let contactPhone = (oldName === null) ? document.getElementById("conPhone").value : oldName[2];
 
 	if (!checkValidContact(contactName, contactEmail, contactPhone)) return;
 	
@@ -360,19 +360,68 @@ function addContact(state, oldID = null, conDate = null)
 	}
 
 }
-/*
-sortTable(val) 
-{
 
+var dir = "desc";
+
+function sortTable(n) {
+	let table = document.getElementById("contactList");
+	let switching = true;
+
+	let info = document.querySelectorAll("th[onclick*='sortTable']");
+	info.forEach((header) => {
+		header.innerHTML = header.innerHTML.replace(" ▼ ", "").replace(" ▲ ", "");
+	});
+
+	if (dir == "desc")
+	{
+		dir = "asc";
+		info[n].innerHTML += " ▼ ";
+	}
+	else
+	{
+		dir = "desc";
+		info[n].innerHTML += " ▲ ";
+	}
+
+	while (switching) 
+	{
+		switching = false;
+		let rows = table.rows;
+
+		for (let i = 1; i < (rows.length - 1); i++) 
+		{
+			let top = rows[i].getElementsByTagName("td")[n];
+			let bottom = rows[i + 1].getElementsByTagName("td")[n];
+
+			if (dir == "asc") 
+			{
+				if (top.innerHTML.toLowerCase() > bottom.innerHTML.toLowerCase()) 
+				{
+					console.log("ascing");
+					rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+					switching = true;
+				}
+			} 
+			else if (dir == "desc") 
+			{
+				if (top.innerHTML.toLowerCase() < bottom.innerHTML.toLowerCase()) 
+				{
+					console.log("descing");
+					rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+					switching = true;
+				}
+			}
+		}
+	}
 }
-*/
+
 function createContactList(parsedContacts)
 {
 	let listOfContacts = `
 		<tr>
-			<th onclick="sortTable(1);">Name</th>
-			<th onclick="sortTable(2);">Email</th>
-			<th onclick="sortTable(3);">Phone</th>
+			<th onclick="sortTable(0);">Name</th>
+			<th onclick="sortTable(1);">Email</th>
+			<th onclick="sortTable(2);">Phone</th>
 			<th>???</th>
 			<th>???</th>
 		</tr>
@@ -695,10 +744,7 @@ function reverse()
 	}
 	else if (selectState.action == "delete")
 	{
-		document.getElementById("conName").value = selectState.name;
-		document.getElementById("conEmail").value = selectState.email;
-		document.getElementById("conPhone").value = selectState.phone;
-		addContact(false, selectState.id, selectState.date);
+		addContact(false, selectState.id, selectState.date, [selectState.name, selectState.email, selectState.phone]);
 	}
 
 	selectState = selectState.prev;
@@ -710,10 +756,7 @@ function forward()
 {
 	if (selectState.next.action == "add")
 	{
-		document.getElementById("conName").value = selectState.next.name;
-		document.getElementById("conEmail").value = selectState.next.email;
-		document.getElementById("conPhone").value = selectState.next.phone;
-		addContact(false, selectState.next.id, selectState.next.date);
+		addContact(false, selectState.next.id, selectState.next.date, [selectState.next.name, selectState.next.email, selectState.next.phone]);
 	}
 	else if (selectState.next.action == "edit")
 	{

@@ -28,14 +28,14 @@
 	function sendResultInfoAsJson( $obj )
 	{
 		header('Content-type: application/json');
-		echo $obj;
+		echo json_encode( $obj );
 	}
 	
 	function returnWithInfo( $msg )
 	{
-		$retValue = '{
-			"msg":"' . $msg . '"
-		}';
+		$retValue = [
+			"msg" => $msg
+		];
 		
 		sendResultInfoAsJson( $retValue );
 	}
