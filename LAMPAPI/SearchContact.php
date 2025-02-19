@@ -17,8 +17,8 @@
         $name = "%" . $inData["name"] . "%";
 
         // Prepares query to search for contact by name
-        $prepStmt = $database->prepare("SELECT * FROM Contacts WHERE name LIKE ? ORDER BY `DateCreated` DESC");
-        $prepStmt->bind_param("s", $name);
+        $prepStmt = $database->prepare("SELECT * FROM Contacts WHERE name LIKE ? AND ID=? ORDER BY `DateCreated` DESC");
+        $prepStmt->bind_param("si", $name, $inData["userID"]);
         $prepStmt->execute();
 
         // Stores result for retrieval
@@ -31,7 +31,8 @@
 				"name" => $row["name"],
 				"email" => $row["email"],
 				"phone" => $row["phone"],
-				"userID" => $row["userID"]
+				"contactID" => $row["contactID"],
+				"conDate" => $row["DateCreated"]
 			];
 		}
 

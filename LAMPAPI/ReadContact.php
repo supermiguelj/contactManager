@@ -11,7 +11,8 @@
 	} 
 	else
 	{
-		$prepStmt = $database->prepare("SELECT * FROM Contacts ORDER BY `DateCreated` DESC");
+		$prepStmt = $database->prepare("SELECT * FROM Contacts WHERE ID=? ORDER BY `DateCreated` DESC");
+		$prepStmt->bind_param("i", $inData["userID"]);
 		$prepStmt->execute();
 		
 		$result = $prepStmt->get_result();
@@ -22,7 +23,8 @@
 				"name" => $row["name"],
 				"email" => $row["email"],
 				"phone" => $row["phone"],
-				"userID" => $row["userID"]
+				"contactID" => $row["contactID"],
+				"conDate" => $row["DateCreated"]
 			];
 		}
 		
