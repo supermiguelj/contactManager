@@ -647,7 +647,7 @@ function deleteContact(contactID, state, oldDate)
 	{
 		let name = document.getElementById(contactID).querySelector("#name").innerText.trim();
 		let email = document.getElementById(contactID).querySelector("#email").innerText.trim(); 
-		let phone = document.getElementById(contactID).querySelector("#phone").innerText.trim();
+		let phone = document.getElementById(contactID).querySelector("#phone").innerText.trim().replace(/\D/g, "");
 		
 		let temp = new contactHistory(userId, name, email, phone, contactID, oldDate, "delete");
 		historyHead = selectState; // Clear redo's and go back to current selectState
