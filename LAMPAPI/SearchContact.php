@@ -65,11 +65,12 @@
         
         function returnWithError( $state, $msg )
         {
-            $retValue = '{
-                "success": ' . $state . ',
-                "searches": 0,
-                "msg":"' . $msg . '"
-            }';
+            $retValue = [
+                "success" => $state,
+                "searches" => 0,
+                "msg" => $msg
+            ];
+            
             sendResultInfoAsJson( $retValue );
         }
         

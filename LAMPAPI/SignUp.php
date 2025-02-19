@@ -54,17 +54,17 @@
 	function sendResultInfoAsJson( $obj )
 	{
 		header('Content-type: application/json');
-		echo $obj;
+		echo json_encode( $obj );
 	}
 	
 	function returnWithError( $err )
 	{
-		$retValue = '{
-			"id": 0, 
-			"firstName": "", 
-			"lastName": "", 
-			"err":"' . $err . '"
-		}';
+		$retValue = [
+			"id" => 0,
+			"firstName" => "",
+			"lastName" => "", 
+			"err" => $err
+		];
 		
 		sendResultInfoAsJson( $retValue );
 	}

@@ -54,10 +54,11 @@
 	
 	function returnWithError( $err )
 	{
-		$retValue = '{
-			"searches": 0,
-			"msg":"' . $err . '"
-		}';
+		$retValue = [
+			"searches" => 0,
+			"msg" => $err
+		];
+		
 		sendResultInfoAsJson( $retValue );
 	}
 	

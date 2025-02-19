@@ -51,29 +51,29 @@
 	function sendResultInfoAsJson( $obj )
 	{
 		header('Content-type: application/json');
-		echo $obj;
+		echo json_encode( $obj );
 	}
 	
 	function returnWithError( $err )
 	{
-		$retValue = '{
-			"id": 0, 
-			"firstName": "", 
-			"lastName": "", 
-			"err":"' . $err . '"
-		}';
+		$retValue = [
+			"id" => 0,
+			"firstName" => "",
+			"lastName" => "", 
+			"err" => $err
+		];
 		
 		sendResultInfoAsJson( $retValue );
 	}
 	
 	function returnWithInfo( $firstName, $lastName, $id )
 	{
-		$retValue = '{ 
-			"id":' . $id . ', 
-			"firstName":"' . $firstName . '", 
-			"lastName":"' . $lastName . '", 
-			"err":"" 
-		}';
+		$retValue = [
+			"id" => $id,
+			"firstName" => $firstName,
+			"lastName" => $lastName, 
+			"err" => ""
+		];
 
 		sendResultInfoAsJson( $retValue );
 	}
