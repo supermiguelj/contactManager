@@ -26,8 +26,10 @@
         }
         $checkStmt->close();
 
+		$dateCreated = isset($inData["oldDate"]) && !empty($inData["oldDate"]) ? $inData["oldDate"]: date("Y-m-d H:i:s");
+
 		$prepstmt = $database->prepare("INSERT INTO Contacts (ID, DateCreated, name, email, phone, contactID) VALUES (?, ?, ?, ?, ?, ?)");
-		$prepstmt->bind_param("issssi", $inData["userID"], $inData["oldDate"], $inData["name"], $inData["email"], $inData["phone"], $inData["conID"]);
+		$prepstmt->bind_param("issssi", $inData["userID"], $dateCreated, $inData["name"], $inData["email"], $inData["phone"], $inData["conID"]);
 		$prepstmt->execute();
 		
 		$prepstmt = $database->prepare("SELECT DateCreated FROM Contacts WHERE contactID=?");
