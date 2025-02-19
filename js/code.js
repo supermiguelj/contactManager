@@ -307,7 +307,7 @@ function addContact(state, oldID = null, conDate = null)
 		name: contactName,
         email: contactEmail,
 		phone: contactPhone,
-        contactID: (oldID == null) ? tempContactID : oldID
+        conID: (oldID == null) ? tempContactID : oldID
 	});
 
 	let url = urlBase + '/CreateContact.' + extension;
