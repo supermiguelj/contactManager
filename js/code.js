@@ -441,6 +441,10 @@ function displayContacts()
 	document.getElementById("contactAddResult").innerHTML = "";
 	document.getElementById("contactList").innerHTML = "";
 
+	let jsonPayload = JSON.stringify({
+		userID: userId
+	});
+	
 	let url = urlBase + '/ReadContact.' + extension;
 	
 	let xhr = new XMLHttpRequest();
@@ -458,7 +462,7 @@ function displayContacts()
 				displayEdits();
 			}
 		};
-		xhr.send();
+		xhr.send(jsonPayload);
 	}
 	catch(err)
 	{
