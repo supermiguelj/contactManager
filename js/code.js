@@ -390,8 +390,8 @@ function createContactList(parsedContacts)
 				<td id="name">${contact.name}</td>
 				<td id="email">${contact.email}</td>
 				<td id="phone">(${(contact.phone).slice(0, 3)}) ${(contact.phone).slice(3, 6)}-${(contact.phone).slice(6, 10)}</td>
-				<td><button onclick="editContact(${contact.contactID}, ${contact.conDate});">Edit</button></td>
-				<td><button onclick="deleteContact(${contact.contactID}, ${contact.conDate}, true);">Delete</button></td>
+				<td><button onclick="editContact(${contact.contactID}, '${contact.conDate}');">Edit</button></td>
+				<td><button onclick="deleteContact(${contact.contactID}, '${contact.conDate}', true);">Delete</button></td>
 			</tr>
 		`;
 	}
@@ -543,7 +543,7 @@ function editContact(btn, oldDate)
 			<td><input type="text" id="editName" value="${name}"></td>
 			<td><input type="email" id="editEmail" value="${email}"></td>
 			<td><input type="text" id="editPhone" value="${phone}"></td>
-			<td><button onclick="saveEdit(this, ${contactID}, null, ${oldDate});">Save</button></td>
+			<td><button onclick="saveEdit(this, ${contactID}, null, '${oldDate}');">Save</button></td>
 			<td><button onclick="displayContacts();">Cancel</button></td>
 		</tr>
 	`;
