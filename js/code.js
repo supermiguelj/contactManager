@@ -669,8 +669,6 @@ function deleteContact(contactID, state, oldDate)
 			if (this.readyState == 4 && this.status == 200) 
 			{
 				let jsonObject = JSON.parse( xhr.responseText );
-
-				document.getElementById(contactID).remove();
 				document.getElementById("contactSearches").innerHTML = jsonObject.msg;
 
 				displayContacts();
