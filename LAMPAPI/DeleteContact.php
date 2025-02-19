@@ -10,8 +10,8 @@
 	}
 	else
 	{
-		$prepStmt = $database->prepare("DELETE FROM Contacts WHERE userID=?");
-		$prepStmt->bind_param("i", $inData["userID"]);
+		$prepStmt = $database->prepare("DELETE FROM Contacts WHERE contactID=?");
+		$prepStmt->bind_param("i", $inData["contactID"]);
 		$prepStmt->execute();
 
         returnWithInfo("Successfully deleted contact");

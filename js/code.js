@@ -15,12 +15,14 @@ const phoneRegex = /^\d{10}$/;
 
 class contactHistory
 {
-	constructor(name, email, phone, id, action)
+	constructor(user, name, email, phone, id, date, action)
 	{
+		this.user = user;
 		this.name = name;
 		this.email = email;
 		this.phone = phone;
 		this.id = id
+		this.date = date;
 		this.action = action;
 		this.prev = null;
 		this.next = null;
@@ -31,7 +33,7 @@ function updateState(state)
 {
 	if (state === null) 
 	{
-		historyHead = new contactHistory(null, null, null, null);
+		historyHead = new contactHistory(null, null, null, null, null, null, null);
 		selectState = historyHead;
 		return;
 	}
@@ -282,7 +284,7 @@ function checkValidContact(name, email, phone)
 	return true;
 }
 
-function addContact(state, oldID = null)
+function addContact(state, oldID = null, conDate = null)
 {
 	let contactName = document.getElementById("conName").value;
 	let contactEmail = document.getElementById("conEmail").value;
@@ -292,18 +294,20 @@ function addContact(state, oldID = null)
 	
 	document.getElementById("contactAddResult").innerHTML = "";
 
-	// Generates userID
-	let tempUserID = Math.floor(Math.random() * 90000) + 10000;
+	// Generates contactID
+	let tempContactID = Math.floor(Math.random() * 90000) + 10000;
 
-	// Used to check if generated userID has been taken by previous contact or not
+	// Used to check if generated contactID has been taken by previous contact or not
 	// I'll handle this tomorrow ~ Miguel
 
 	// Injects payload
 	let jsonPayload = JSON.stringify({
+		userID: userId,
+		oldDate: conDate,
 		name: contactName,
         email: contactEmail,
 		phone: contactPhone,
-        userID: (oldID == null) ? tempUserID : oldID
+        contactID: (oldID == null) ? tempContactID : oldID
 	});
 
 	let url = urlBase + '/CreateContact.' + extension;
@@ -335,7 +339,7 @@ function addContact(state, oldID = null)
 
 				if (state && historyHead.next == null)
 				{
-					let temp = new contactHistory(contactName, contactEmail, contactPhone, tempUserID, "add");
+					let temp = new contactHistory(userId, contactName, contactEmail, contactPhone, tempContactID, jsonObject.conDate, "add");
 					historyHead = selectState;
 					temp.prev = historyHead;
 					historyHead.next = temp;
@@ -356,7 +360,12 @@ function addContact(state, oldID = null)
 	}
 
 }
+/*
+sortTable(val) 
+{
 
+}
+*/
 function createContactList(parsedContacts)
 {
 	let listOfContacts = `
@@ -377,17 +386,53 @@ function createContactList(parsedContacts)
 		contact = parsedContacts.results[i];
 
 		listOfContacts += `
-			<tr class="contactInfo" id="${contact.userID}">
+			<tr class="contactInfo" id="${contact.contactID}">
 				<td id="name">${contact.name}</td>
 				<td id="email">${contact.email}</td>
 				<td id="phone">(${(contact.phone).slice(0, 3)}) ${(contact.phone).slice(3, 6)}-${(contact.phone).slice(6, 10)}</td>
-				<td><button onclick="editContact(${contact.userID});">Edit</button></td>
-				<td><button onclick="deleteContact(${contact.userID}, true);">Delete</button></td>
+				<td><button onclick="editContact(${contact.contactID}, ${contact.conDate});">Edit</button></td>
+				<td><button onclick="deleteContact(${contact.contactID}, ${contact.conDate}, true);">Delete</button></td>
 			</tr>
 		`;
 	}
 	
 	document.getElementById("contactList").innerHTML = listOfContacts;
+}
+
+function displayEdits()
+{
+	let curr = historyHead;
+	let list = "";
+	while (curr !== null)
+	{
+		if (curr.action === "add")
+		{
+			list += `<li>Name: <strong>${curr.name}</strong> with ${curr.id} was added</li><br />`;
+		}
+		else if (curr.action === "edit")
+		{
+			list += `<li>Name: <strong>${curr.prev.name}</strong> changed to ${curr.name}</li><br />`;
+			curr = curr.prev;
+		}
+		else if (curr.action === "delete")
+		{
+			list += `<li>Name: <strong>${curr.name}</strong> with ${curr.id} was deleted</li><br />`;
+		}
+		else
+		{
+			list += `<li>Default</li><br />`;
+		}
+
+		if (curr == selectState || (curr.action === "edit" && curr == selectState.prev))
+		{
+			list += `<li>^ Current state ^</li><br />`;
+		}
+		
+		curr = curr.prev;
+	}
+
+	// console.log(historyHead);
+	document.getElementById("editList").innerHTML = list;
 }
 
 function displayContacts()
@@ -410,39 +455,7 @@ function displayContacts()
 				let jsonObject = JSON.parse( xhr.responseText );
 
 				createContactList(jsonObject);
-
-				let curr = historyHead;
-				let list = "";
-				while (curr !== null)
-				{
-					if (curr.action === "add")
-					{
-						list += `<li>Name: <strong>${curr.name}</strong> with ${curr.id} was added</li><br />`;
-					}
-					else if (curr.action === "edit")
-					{
-						list += `<li>Name: <strong>${curr.prev.name}</strong> changed to ${curr.name}</li><br />`;
-						curr = curr.prev;
-					}
-					else if (curr.action === "delete")
-					{
-						list += `<li>Name: <strong>${curr.name}</strong> with ${curr.id} was deleted</li><br />`;
-					}
-					else
-					{
-						list += `<li>Default</li><br />`;
-					}
-
-					if (curr == selectState || (curr.action === "edit" && curr == selectState.prev))
-					{
-						list += `<li>^ Current state ^</li><br />`;
-					}
-					
-					curr = curr.prev;
-				}
-
-				// console.log(historyHead);
-				document.getElementById("editList").innerHTML = list;
+				displayEdits();
 			}
 		};
 		xhr.send();
@@ -470,6 +483,7 @@ function searchContact()
 	// Injects payload
 	let jsonPayload = JSON.stringify({
 		name: contactName,
+		userID: userId
 	});
 	
 	// Holds the url to the correct API endpoint
@@ -509,29 +523,29 @@ function searchContact()
 	}
 }
 
-function editContact(btn) 
+function editContact(btn, oldDate) 
 {
 	let contactTable = document.getElementById(btn);
 
 	let name = contactTable.querySelector("#name").innerText.trim();
     let email = contactTable.querySelector("#email").innerText.trim(); 
     let phone = contactTable.querySelector("#phone").innerText.trim().replace(/\D/g, "");
-    const userID = btn;
+    const contactID = btn;
 
-	oldContact = new contactHistory(name, email, phone, userID, "edit");
+	oldContact = new contactHistory(userId, name, email, phone, contactID, oldDate, "edit");
 
 	contactTable.innerHTML = `
 		<tr id="editForm">
 			<td><input type="text" id="editName" value="${name}"></td>
 			<td><input type="email" id="editEmail" value="${email}"></td>
 			<td><input type="text" id="editPhone" value="${phone}"></td>
-			<td><button onclick="saveEdit(this, ${userID}, null);">Save</button></td>
+			<td><button onclick="saveEdit(this, ${contactID}, null, ${oldDate});">Save</button></td>
 			<td><button onclick="displayContacts();">Cancel</button></td>
 		</tr>
 	`;
 }
 
-function saveEdit(btn, userID, state) {
+function saveEdit(btn, contactID, state, oldDate) {
 	let url = urlBase + '/UpdateContact.' + extension;
 	let newName = newEmail = newPhone = null;
 
@@ -574,7 +588,7 @@ function saveEdit(btn, userID, state) {
         name: newName, 
         email: newEmail, 
 		phone: newPhone, 
-		userNum: parseInt( userID )
+		conID: parseInt( contactID )
 	});
 
 	let xhr = new XMLHttpRequest();
@@ -591,7 +605,7 @@ function saveEdit(btn, userID, state) {
 
 				if (state === null && historyHead.next == null)
 				{
-					let temp = new contactHistory(newName, newEmail, newPhone, userID, "edit");
+					let temp = new contactHistory(userId, newName, newEmail, newPhone, contactID, oldDate, "edit");
 
 					historyHead = selectState;
 
@@ -616,22 +630,22 @@ function saveEdit(btn, userID, state) {
 	}
 }
 
-function deleteContact(userID, state) 
+function deleteContact(contactID, state, oldDate) 
 {
 	// Are you sure??
 	let url = urlBase + '/DeleteContact.' + extension;
 
 	let jsonPayload = JSON.stringify({
-        userID: parseInt( userID )
+        contactID: parseInt( contactID )
 	});
 
 	if (state && historyHead.next == null)
 	{
-		let name = document.getElementById(userID).querySelector("#name").innerText.trim();
-		let email = document.getElementById(userID).querySelector("#email").innerText.trim(); 
-		let phone = document.getElementById(userID).querySelector("#phone").innerText.trim();
+		let name = document.getElementById(contactID).querySelector("#name").innerText.trim();
+		let email = document.getElementById(contactID).querySelector("#email").innerText.trim(); 
+		let phone = document.getElementById(contactID).querySelector("#phone").innerText.trim();
 		
-		let temp = new contactHistory(name, email, phone, userID, "delete");
+		let temp = new contactHistory(userId, name, email, phone, contactID, oldDate, "delete");
 		historyHead = selectState; // Clear redo's and go back to current selectState
 		temp.prev = historyHead;
 		historyHead.next = temp;
@@ -652,7 +666,7 @@ function deleteContact(userID, state)
 			{
 				let jsonObject = JSON.parse( xhr.responseText );
 
-				document.getElementById(userID).remove();
+				document.getElementById(contactID).remove();
 				document.getElementById("contactSearches").innerHTML = jsonObject.msg;
 
 				displayContacts();
@@ -670,19 +684,19 @@ function reverse()
 {
 	if (selectState.action == "add")
 	{
-		deleteContact(selectState.id, false);
+		deleteContact(selectState.id, selectState.date, false);
 	}
 	else if (selectState.action == "edit")
 	{
 		// back to old name
-		saveEdit(null, selectState.id, "prev");
+		saveEdit(null, selectState.id, "prev", selectState.date);
 	}
 	else if (selectState.action == "delete")
 	{
 		document.getElementById("conName").value = selectState.name;
 		document.getElementById("conEmail").value = selectState.email;
 		document.getElementById("conPhone").value = selectState.phone;
-		addContact(false, selectState.id);
+		addContact(false, selectState.id, selectState.date);
 	}
 
 	selectState = selectState.prev;
@@ -697,16 +711,16 @@ function forward()
 		document.getElementById("conName").value = selectState.next.name;
 		document.getElementById("conEmail").value = selectState.next.email;
 		document.getElementById("conPhone").value = selectState.next.phone;
-		addContact(false, selectState.next.id);
+		addContact(false, selectState.next.id, selectState.next.date);
 	}
 	else if (selectState.next.action == "edit")
 	{
 		// back to new name
-		saveEdit(null, selectState.next.id, "next");
+		saveEdit(null, selectState.next.id, "next", selectState.next.date);
 	}
 	else if (selectState.next.action == "delete")
 	{
-		deleteContact(selectState.next.id, false);
+		deleteContact(selectState.next.id, selectState.next.date, false);
 	}
 
 	selectState = selectState.next;

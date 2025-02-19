@@ -11,8 +11,8 @@
 	else
 	{
 		// Check if the contact already exists
-        $checkStmt = $database->prepare("SELECT * FROM Contacts WHERE name = ? AND email = ? AND phone = ?");
-		$checkStmt->bind_param("sss", $inData["name"], $inData["email"], $inData["phone"]);	
+        $checkStmt = $database->prepare("SELECT * FROM Contacts WHERE ID = ? AND name = ? AND email = ? AND phone = ?");
+		$checkStmt->bind_param("isss", $inData["userID"], $inData["name"], $inData["email"], $inData["phone"]);	
         $checkStmt->execute();
         $checkStmt->store_result();
         
@@ -26,11 +26,18 @@
         }
         $checkStmt->close();
 
-		$prepstmt = $database->prepare("INSERT INTO Contacts (name, email, phone, userID) VALUES (?, ?, ?, ?)");
-		$prepstmt->bind_param("sssi", $inData["name"], $inData["email"], $inData["phone"], $inData["userID"]);
+		$prepstmt = $database->prepare("INSERT INTO Contacts (ID, DateCreated, name, email, phone, contactID) VALUES (?, ?, ?, ?, ?, ?)");
+		$prepstmt->bind_param("issssi", $inData["userID"], $inData["oldDate"], $inData["name"], $inData["email"], $inData["phone"], $inData["conID"]);
+		$prepstmt->execute();
+		
+		$prepstmt = $database->prepare("SELECT DateCreated FROM Contacts WHERE contactID=?");
+		$prepstmt->bind_param("i", $inData["conID"]);
 		$prepstmt->execute();
 
-		returnWithInfo( true, "Contact successfully added" );
+		$result = $prepstmt->get_result();
+		$row = $result->fetch_assoc();
+
+		returnWithInfo( true, $row["DateCreated"], "Contact successfully added" );
 		
 		$prepstmt->close();
 		$database->close();
@@ -47,10 +54,11 @@
 		echo json_encode($obj);
 	}
 
-	function returnWithInfo( $state, $msg )
+	function returnWithInfo( $state, $date, $msg )
 	{
 		$retValue = [
 			"success" => $state,
+			"conDate" => $date,
 			"msg" => $msg
 		];
 		

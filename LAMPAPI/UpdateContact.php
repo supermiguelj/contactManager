@@ -10,8 +10,8 @@
 	}
 	else
 	{
-		$prepStmt = $database->prepare("UPDATE Contacts SET name=?, email=?, phone=? WHERE userID=?");
-		$prepStmt->bind_param("sssi", $inData["name"], $inData["email"], $inData["phone"], $inData["userNum"]);
+		$prepStmt = $database->prepare("UPDATE Contacts SET name=?, email=?, phone=? WHERE contactID=?");
+		$prepStmt->bind_param("sssi", $inData["name"], $inData["email"], $inData["phone"], $inData["conID"]);
 		$prepStmt->execute();
 
         returnWithInfo("Successfully updated contact");
