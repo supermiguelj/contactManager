@@ -19,12 +19,12 @@ PRIMARY KEY (`ID`)
 -- create 'Contacts' table
 CREATE TABLE IF NOT EXISTS `Manager`.`Contacts`
 (
-`ID` INT NOT NULL AUTO_INCREMENT,
+`ID` INT NOT NULL,
 `DateCreated` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 `name` VARCHAR(50) NOT NULL DEFAULT '',
 `email` VARCHAR(50) NOT NULL DEFAULT '',
 `phone` VARCHAR(50) NOT NULL DEFAULT '',
-`userID` INT NOT NULL DEFAULT 0,
+`contactID` INT NOT NULL DEFAULT 0,
 PRIMARY KEY (`ID`)
 -- FOREIGN KEY (`userID`) REFERENCES users(`ID`) ON DELETE CASCADE
 ) ENGINE=InnoDB;
@@ -36,10 +36,10 @@ INSERT INTO Users (firstName, lastName, username, password) VALUES
 ('Test', 'Dummy', 'test', 'dummy');
 
 -- insert sample data into 'Contacts' table
-INSERT INTO Contacts (name, email, userID) VALUES
-('Bob Ross', 'RossBob@gmail.com', '1234567890','12345'),
-('Professor Gerber', 'GerberProf123@yahoo.com', '1010101010','67890'),
-('Test Dummy', 'testdummy@example.com', '0987654321','13579');
+INSERT INTO Contacts (ID, name, email, phone, contactID) VALUES
+(1, 'Bob Ross', 'RossBob@gmail.com', '1234567890','12345'),
+(1, 'Professor Gerber', 'GerberProf123@yahoo.com', '1010101010','67890'),
+(2, 'Test Dummy', 'testdummy@example.com', '0987654321','13579');
 
 -- display table
 SELECT * FROM Users;
