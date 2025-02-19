@@ -26,7 +26,7 @@
         }
         $checkStmt->close();
 
-		$dateCreated = isset($inData["oldDate"]) && !empty($inData["oldDate"]) ? $inData["oldDate"]: date("Y-m-d H:i:s");
+		$dateCreated = ($inData["oldDate"] == null) ? date("Y-m-d H:i:s")  : date("Y-m-d H:i:s", strtotime($inData["oldDate"])); // Convert to proper format
 
 		$prepstmt = $database->prepare("INSERT INTO Contacts (ID, DateCreated, name, email, phone, contactID) VALUES (?, ?, ?, ?, ?, ?)");
 		$prepstmt->bind_param("issssi", $inData["userID"], $dateCreated, $inData["name"], $inData["email"], $inData["phone"], $inData["conID"]);
