@@ -227,8 +227,9 @@ hr {
     text-align: center;
     white-space: nowrap; /* Prevents wrapping */
     position: fixed;
-    left: 45%;
+    left: 50%;
     margin-top: 24px;
+    margin-left: -48px;
     color: rgba(255,255,255,1);
 }
 
