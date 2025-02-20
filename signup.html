@@ -7,17 +7,20 @@
 
         <script type="text/javascript" src="./js/md5.js"></script>
         <script type="text/javascript" src="./js/code.js"></script>
-        <!-- <link href="css/styles.css" rel="stylesheet"> -->	
+        <link href="css/styles.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
     </head>
     <body>
     
         <div id="signDiv">
-            <span id="inner-title">PLEASE SIGN UP</span>
-            <input type="text" id="registerFirstName" placeholder="Please enter your first name" maxlength="20" /><br />
-            <input type="text" id="registerLastName" placeholder="Please enter your last name" maxlength="20" /><br />
-            <input type="text" id="registerUsername" placeholder="Please enter username" maxlength="20" /><br />
-            <input type="password" id="registerPassword" placeholder="Please enter password"/><br />
+            <span id="inner-Title">First Name</span>
+            <input type="text" id="registerFirstName" placeholder="Please enter your First Name" maxlength="20" /><br /> <hr/>
+            <span id="inner-Title">Last Name</span>
+            <input type="text" id="registerLastName" placeholder="Please enter your Last Name" maxlength="20" /><br /> <hr/>
+            <span id="inner-Title">Username</span>
+            <input type="text" id="registerUsername" placeholder="Please enter Username" maxlength="20" /><br /> <hr/>
+            <span id="inner-Title">Password</span>
+            <input type="password" id="registerPassword" placeholder="Please enter Password"/><br /> <hr/>
             <button type="button" id="signupButton" class="buttons" onclick="doSignUp();"> Sign up </button>
             <span id="registerResult"></span>
         </div>
