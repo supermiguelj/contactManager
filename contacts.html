@@ -7,8 +7,11 @@
 
         <script type="text/javascript" src="./js/md5.js"></script>
         <script type="text/javascript" src="./js/code.js"></script>
-        <!-- <link href="css/styles.css" rel="stylesheet"> -->	
-        <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link href="css/styles.css" rel="stylesheet">	
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
         
         <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function() 
@@ -21,52 +24,34 @@
     </head>
     <body>
 
-        <h1 id="title">COP 4331 LAMP Stack Demo</h1>
+        <div id="logoutButton" class="innerTitleSub" onclick="window.location.href = 'login.html'">
+            Logout
+        </div>
 
         <div id="loggedInDiv">
             <span id="userName"></span><br />
-            <button type="button" id="logoutButton" class="buttons" onclick="doLogout();"> Log Out </button>
-        </div>
-    
-        <div id="accessUIDiv">
-            <br />
-    
-            <input type="text" id="conName" placeholder="Enter your name" maxlength="40">
-            <input type="text" id="conEmail" placeholder="Enter your email" maxlength="20">
-            <input type="text" id="conPhone" placeholder="Enter your phone" maxlength="10">
-            <button type="button" id="addContactButton" class="buttons" onclick="addContact(true);"> Add Contact </button><br />
-
-            <br />
-            <div id="searchContactDiv">
-                <input type="text" id="searchContact" placeholder="Search by name">
-                <button type="button" id="searchContactButton" class="buttons" onclick="searchContact();"> Search Contact</button><br />
-            </div>
-
-            <br />
-
-            <div>
-                <button type="button" id="undo" class="buttons" disabled onclick="reverse();"> Undo </button> | 
-                <button type="button" id="redo" class="buttons" disabled onclick="forward();"> Redo </button> |
-            </div>
-
-            <br />
-
-            <span id="contactAddResult"></span>
-    
-            <br />
-    
-            <span id="contactSearches"></span>
-            <br />
-
-            <table style="width:75%; border:1px solid black; text-align: center;" id="contactList">
-            </table>
-    
-            <br />
         </div>
 
-        <div id="editHistory">
-            <ul id="editList"></ul>
+    <div id="accessUIDiv">
+    
+        <div id="searchContactDiv">
+            <input type="text" id="searchContact" placeholder="Search by name">
+            <i class="icon-button fas fa-search" id="searchContactButton" onclick="searchContact()"></i>
+            <i class="icon-button fas fa-undo" id="undo" onclick="reverse()"></i>
+            <i class="icon-button fas fa-redo" id="redo" onclick="forward()"></i>
         </div>
+    
+        <br />
+    
+        <span id="contactAddResult"></span>
+        <br />
+        <span id="contactSearches"></span>
+        <br />
+    
+        <table id="contactList">
+        </table>
+        <br />
+    </div>
 
     </body>
 </html>
