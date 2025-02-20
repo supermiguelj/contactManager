@@ -226,8 +226,9 @@ hr {
     font-size: 36px;
     text-align: center;
     white-space: nowrap; /* Prevents wrapping */
+    margin: auto;
     margin-top: 100px; /* Moves it further down */
-    padding-right: 4%;
+    color: rgba(255,255,255,1);
 }
 
 #loginResult{
