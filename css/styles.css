@@ -83,6 +83,7 @@ body {
     text-align: center;
     width: 60%;
     margin: auto;
+    height: auto; /* Added */
 }
 
 
@@ -174,10 +175,19 @@ input[type="text"]::placeholder, input[type="password"]::placeholder, input[type
 }
 
 #logoutButton {
-    margin: 50px auto;
-    text-align: center !important;
+    display: inline-block;
+    font-size: 24px;
     cursor: pointer;
-    transition: text-shadow 0.1s ease-in-out;
+    text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.6);
+    transition: text-shadow 0.2s ease-in-out;
+}
+
+#logoutContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
 }
 
 #signUpButton:hover, #logoutButton:hover {
@@ -210,12 +220,12 @@ hr {
   margin-bottom: 30px;
 }
 
-#loggedInDiv
-{
-    font-size: 30px;
-    width: 40%;
-    margin: 12px auto;
-    padding: 25px;
+#loggedInDiv {
+    font-size: 36px;
+    text-align: center;
+    white-space: nowrap; /* Prevents wrapping */
+    margin-top: 100px; /* Moves it further down */
+    padding-right: 4%;
 }
 
 #loginResult{
@@ -236,9 +246,18 @@ hr {
     text-align: center;
 }
 
-#logoutButton{
-    width: 20%;
-    margin-left: 40%;
+#logoutButton {
+    font-size: 24px;
+    cursor: pointer;
+    text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.6);
+    transition: text-shadow 0.2s ease-in-out;
+}
+
+#contactAddResult {
+    float: left;
+    text-align: left;
+    width: 50%;
+    padding-left: 10px; /* Adds slight padding */
 }
 
 select{
@@ -274,12 +293,20 @@ select{
 
 #searchContactDiv {
     display: flex;
+    align-items: center;
     gap: 10px;
     padding: 10px 50px;
 }
 
 #searchContact {
     flex: 1;
+}
+
+#contactSearches {
+    float: right;
+    text-align: right;
+    width: 50%;
+    padding-right: 10px;
 }
 
 #accessUIDiv > div:has(#undo) {
@@ -290,7 +317,7 @@ select{
 
 #contactList {
     border-collapse: collapse;
-    margin: 20px auto;
+    margin: 0 auto;
     width: 100%;
 }
 
@@ -305,12 +332,34 @@ select{
     border-top: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-#name, #conName {
-    padding-left: 50px !important;
+#contactList th {
+    position: sticky;
+    top: 0;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    z-index: 10;
+    padding: 15px;
+    color: black;
+}
+
+#name {
+    padding-left: 80px !important;
+}
+
+#conName {
+    padding-left: 70px;
 }
 
 #tableButtons1 {
     padding-right: 50px !important;
+}
+
+/* Add a table container div */
+.table-container {
+    max-height: 400px;
+    overflow-y: auto;
+    width: 100%;
+    position: relative;
 }
 
 .icon-button {
@@ -357,4 +406,79 @@ select{
 .action-icon:hover {
     color: #a0d2eb;
     transform: scale(1.1);
+}
+
+.table-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.table-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+/* Right SideNav */
+.sidenav {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    right: -250px; /* Initially hidden on the right */
+    background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent */
+    backdrop-filter: blur(10px); /* Glass effect */
+    -webkit-backdrop-filter: blur(10px); /* Safari support */
+    box-shadow: -5px 0 10px rgba(0, 0, 0, 0.2);
+    transition: 0.3s ease-in-out;
+    padding-top: 60px;
+}
+
+/* SideNav links */
+.sidenav p {
+    padding: 12px 24px;
+    text-decoration: none;
+    font-size: 16px;
+    color: white;
+    display: block;
+    transition: 0.2s ease-in-out;
+}
+
+/*
+.sidenav p:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+*/
+
+/* Close button */
+.sidenav .closebtn {
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    font-size: 36px;
+    cursor: pointer;
+}
+
+/* Open Button */
+#openNav {
+    position: fixed;
+    top: 20px;
+    right: 30px;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 10px 15px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+#openNav:hover {
+    background: rgba(255, 255, 255, 0.4);
 }

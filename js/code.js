@@ -112,7 +112,7 @@ function doLogin()
 				// If user ID is invalid (login failed), display an error message
 				if (userId == 0)
 				{		
-					document.getElementById("loginResult").innerHTML = jsonObject.msg;
+					document.getElementById("loginResult").innerHTML = jsonObject.err;
 					return;
 				}
 		
@@ -284,6 +284,14 @@ function checkValidContact(name, email, phone)
 	return true;
 }
 
+function openNav() {
+    document.getElementById("historyNav").style.right = "0";
+}
+
+function closeNav() {
+    document.getElementById("historyNav").style.right = "-250px";
+}
+
 function addContact(state, oldID = null, conDate = null, oldName = null)
 {
 	let contactName = (oldName === null) ? document.getElementById("conName").value : oldName[0];
@@ -388,7 +396,7 @@ function sortTable(n) {
 		switching = false;
 		let rows = table.rows;
 
-		for (let i = 1; i < (rows.length - 1); i++) 
+		for (let i = 2; i < (rows.length - 1); i++) 
 		{
 			let top = rows[i].getElementsByTagName("td")[n];
 			let bottom = rows[i + 1].getElementsByTagName("td")[n];
@@ -397,7 +405,7 @@ function sortTable(n) {
 			{
 				if (top.innerHTML.toLowerCase() > bottom.innerHTML.toLowerCase()) 
 				{
-					console.log("ascing");
+					// console.log("ascing");
 					rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
 					switching = true;
 				}
@@ -406,7 +414,7 @@ function sortTable(n) {
 			{
 				if (top.innerHTML.toLowerCase() < bottom.innerHTML.toLowerCase()) 
 				{
-					console.log("descing");
+					// console.log("descing");
 					rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
 					switching = true;
 				}
@@ -425,13 +433,13 @@ function createContactList(parsedContacts)
 			<th></th>
 			<th></th>
 		</tr>
-    <tr id="addContactRow">
-        <td><input type="text" id="conName" placeholder="Name"></td>
-        <td><input type="email" id="conEmail" placeholder="Email"></td>
-        <td><input type="text" id="conPhone" placeholder="Phone"></td>
-        <td colspan="2">
-            <i class="icon-button fas fa-user-plus" id="addContactButton" onclick="addContact(true)"></i>
-    </tr>
+		<tr id="addContactRow">
+			<td><input type="text" id="conName" placeholder="Enter name" maxlength="40"></td>
+			<td><input type="email" id="conEmail" placeholder="Enter email"></td>
+			<td><input type="text" id="conPhone" placeholder="Enter Phone" maxlength="10"></td>
+			<td colspan="2">
+				<i class="icon-button fas fa-user-plus" id="addContactButton" onclick="addContact(true)"></i>
+		</tr>
 	`;
 
 	document.getElementById("contactSearches").innerHTML = 
@@ -458,41 +466,45 @@ function createContactList(parsedContacts)
 function displayEdits()
 {
 	let curr = historyHead;
-	let list = "";
+	let list = `
+		<p class="closebtn" onclick="closeNav()"> X </p>
+		<p>History: </p>
+	`;
+
 	while (curr !== null)
 	{
+		let sameState = false;
+		if (curr == selectState) { sameState = true; } // (curr.action === "edit" && curr == selectState.prev)
+		
 		if (curr.action === "add")
 		{
-			list += `<li>Name: <strong>${curr.name}</strong> with ${curr.id} was added</li><br />`;
+			list += `<p style="color: ${(sameState) ? 'black' : 'inherit'}">Name: <strong>${curr.name}</strong> with ID: ${curr.id} was added</p>`;
 		}
 		else if (curr.action === "edit")
 		{
-			list += `<li>Name: <strong>${curr.prev.name}</strong> changed to ${curr.name}</li><br />`;
+			list += `<p style="color: ${(sameState) ? 'black' : 'inherit'}"}>Name: <strong>${curr.prev.name}</strong> changed to ${curr.name} with ID: ${curr.id}</p>`;
 			curr = curr.prev;
 		}
 		else if (curr.action === "delete")
 		{
-			list += `<li>Name: <strong>${curr.name}</strong> with ${curr.id} was deleted</li><br />`;
+			list += `<p style="color: ${(sameState) ? 'black' : 'inherit'}">Name: <strong>${curr.name}</strong> with ID: ${curr.id} was deleted</p>`;
 		}
 		else
 		{
-			list += `<li>Default</li><br />`;
-		}
-
-		if (curr == selectState || (curr.action === "edit" && curr == selectState.prev))
-		{
-			list += `<li>^ Current state ^</li><br />`;
+			list += `<p style="color: ${(sameState) ? 'black' : 'inherit'}">Default</p>`;
 		}
 		
 		curr = curr.prev;
 	}
 
 	// console.log(historyHead);
-	document.getElementById("editList").innerHTML = list;
+	document.getElementById("historyNav").innerHTML = list;
 }
 
 function displayContacts()
 {
+	document.getElementById("userName").innerHTML = `Welcome, <span style="color: black;">${firstName}</span>`;
+	
 	document.getElementById("contactSearches").innerHTML = "";
 	document.getElementById("contactAddResult").innerHTML = "";
 	document.getElementById("contactList").innerHTML = "";
