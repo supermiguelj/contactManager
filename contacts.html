@@ -24,34 +24,43 @@
     </head>
     <body>
 
-        <div id="logoutButton" class="innerTitleSub" onclick="window.location.href = 'login.html'">
-            Logout
+        <div id="historyNav" class="sidenav">
+        </div>
+        
+        <!-- Button to open SideNav -->
+        <span id="openNav" onclick="openNav()">Open History</span>       
+
+        <div id="logoutContainer">
+            <div id="logoutButton" class="innerTitleSub" onclick="doLogout();">
+                Logout
+            </div>
+            <div id="loggedInDiv">
+                <span id="userName"></span>
+            </div>
         </div>
 
-        <div id="loggedInDiv">
-            <span id="userName"></span><br />
+        <div id="accessUIDiv">
+        
+            <div id="searchContactDiv">
+                <input type="text" id="searchContact" placeholder="Search by name" maxlength="40">
+                <i class="icon-button fas fa-search" id="searchContactButton" onclick="searchContact()"></i>
+                <i class="icon-button fas fa-undo" id="undo" onclick="reverse()"></i>
+                <i class="icon-button fas fa-redo" id="redo" onclick="forward()"></i>
+            </div>
+        
+            <br />
+        
+            <span id="contactAddResult"></span>
+            <br />
+            <span id="contactSearches"></span>
+            <br />
+        
+            <div class="table-container">
+                <table id="contactList">
+                </table>
+            </div>
+            <br />
         </div>
-
-    <div id="accessUIDiv">
-    
-        <div id="searchContactDiv">
-            <input type="text" id="searchContact" placeholder="Search by name">
-            <i class="icon-button fas fa-search" id="searchContactButton" onclick="searchContact()"></i>
-            <i class="icon-button fas fa-undo" id="undo" onclick="reverse()"></i>
-            <i class="icon-button fas fa-redo" id="redo" onclick="forward()"></i>
-        </div>
-    
-        <br />
-    
-        <span id="contactAddResult"></span>
-        <br />
-        <span id="contactSearches"></span>
-        <br />
-    
-        <table id="contactList">
-        </table>
-        <br />
-    </div>
 
     </body>
 </html>
