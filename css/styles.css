@@ -26,6 +26,32 @@ body {
     margin: auto;
 }
 
+#signDiv {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 20px 50px;
+    border: 1px solid rgba(255, 255, 255, 255);
+    border-radius: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), inset 0 0 10px rgba(255, 255, 255, 0.4); 
+    text-align: center;
+    width: 580px;
+    margin: auto;
+}
+
+#signUpButton {
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    transition: text-shadow 0.1s ease-in-out;
+    text-align: left;
+    font-size: 24px;
+    margin-left: 24px;
+    margin-right: 16px;
+}
+
+#signUpButton:hover {
+    text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.6);
+}
+
 #accessUIDiv {
     flex-direction: column;
     flex-wrap: nowrap;
@@ -50,6 +76,15 @@ body {
 }
 
 #innerTitle {
+    font-size: 32px;
+    color: #ffffff;
+    display: block;
+    text-align: left;
+    margin: 20px 0px;
+    padding-top: 20px;
+}
+
+#inner-title {
     font-size: 32px;
     color: #ffffff;
     display: block;
@@ -109,6 +144,16 @@ input[type="text"]::placeholder, input[type="password"]::placeholder, input[type
       cursor: pointer;
       transition: text-shadow 0.1s ease-in-out;
   }
+ #returnLogin {
+    position: fixed;
+    right: 128px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    transition: text-shadow 0.1s ease-in-out;
+    font-size: 18px;
+    text-align: right;
+  }
 }
 
 #logoutButton {
@@ -119,6 +164,21 @@ input[type="text"]::placeholder, input[type="password"]::placeholder, input[type
 }
 
 #signUpButton:hover, #logoutButton:hover {
+    text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.6);
+}
+
+#returnLogin {
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    transition: text-shadow 0.1s ease-in-out;
+    font-size: 18px;
+    text-align: right;
+    margin-left: 16px;
+    margin-right: 24px;
+}
+
+#returnLogin:hover {
     text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.6);
 }
 
