@@ -226,8 +226,9 @@ hr {
     font-size: 36px;
     text-align: center;
     white-space: nowrap; /* Prevents wrapping */
-    margin: auto;
-    margin-top: 100px; /* Moves it further down */
+    position: fixed;
+    left: 45%;
+    margin-top: 24px;
     color: rgba(255,255,255,1);
 }
 
