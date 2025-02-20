@@ -422,9 +422,16 @@ function createContactList(parsedContacts)
 			<th onclick="sortTable(0);">Name</th>
 			<th onclick="sortTable(1);">Email</th>
 			<th onclick="sortTable(2);">Phone</th>
-			<th>???</th>
-			<th>???</th>
+			<th></th>
+			<th></th>
 		</tr>
+    <tr id="addContactRow">
+        <td><input type="text" id="conName" placeholder="Name"></td>
+        <td><input type="email" id="conEmail" placeholder="Email"></td>
+        <td><input type="text" id="conPhone" placeholder="Phone"></td>
+        <td colspan="2">
+            <i class="icon-button fas fa-user-plus" id="addContactButton" onclick="addContact(true)"></i>
+    </tr>
 	`;
 
 	document.getElementById("contactSearches").innerHTML = 
@@ -439,8 +446,8 @@ function createContactList(parsedContacts)
 				<td id="name">${contact.name}</td>
 				<td id="email">${contact.email}</td>
 				<td id="phone">(${(contact.phone).slice(0, 3)}) ${(contact.phone).slice(3, 6)}-${(contact.phone).slice(6, 10)}</td>
-				<td><button onclick="editContact(${contact.contactID}, '${contact.conDate}');">Edit</button></td>
-				<td><button onclick="deleteContact(${contact.contactID}, '${contact.conDate}', true);">Delete</button></td>
+        <td id="tableButtons0"><i class="icon-button fas fa-edit" id="editButton" onclick="editContact(${contact.contactID}, '${contact.conDate}');"></i></td>
+        <td id="tableButtons1"><i class="icon-button fas fa-trash" id="deleteButton" onclick="deleteContact(${contact.contactID}, '${contact.conDate}', true);"></i></td>
 			</tr>
 		`;
 	}
