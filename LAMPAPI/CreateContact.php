@@ -17,7 +17,7 @@
         $checkStmt->store_result();
         
         if ($checkStmt->num_rows > 0) {
-            returnWithInfo( false, "Contact already exists!" );
+            returnWithInfo( false, null, "Contact already exists!" );
 
             $checkStmt->close();
             $database->close();
