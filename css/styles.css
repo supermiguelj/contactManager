@@ -35,6 +35,23 @@ body {
     text-align: center;
     width: 580px;
     margin: auto;
+    font-size: 48px;
+}
+
+#registerFirstName {
+  font-size: 32px;
+}
+
+#registerLastName {
+  font-size: 32px;
+}
+
+#registerUsername {
+  font-size: 32px;
+}
+
+#registerPassword {
+  font-size: 32px;
 }
 
 #signUpButton {
