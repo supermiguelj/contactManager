@@ -186,7 +186,7 @@ input[type="text"]::placeholder, input[type="password"]::placeholder, input[type
 #logoutContainer {
     width: 100%;
     position: fixed;
-    left: 48%;
+    left: 46%;
     top: 0%;
     align-self: center;
     align-items: center;
@@ -227,7 +227,7 @@ hr {
     text-align: center;
     white-space: nowrap; /* Prevents wrapping */
     position: fixed;
-    left: 38%;
+    left: 39%;
     margin-top: 24px;
     color: rgba(255,255,255,1);
 }
