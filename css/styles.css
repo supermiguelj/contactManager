@@ -186,7 +186,7 @@ input[type="text"]::placeholder, input[type="password"]::placeholder, input[type
 #logoutContainer {
     width: 100%;
     position: fixed;
-    left: 46%;
+    left: 47%;
     top: 0%;
     align-self: center;
     align-items: center;
